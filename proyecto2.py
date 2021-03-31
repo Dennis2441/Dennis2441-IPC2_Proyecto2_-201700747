@@ -6,6 +6,7 @@ from tkinter import messagebox
 import xml.dom.minidom
 from xml.dom import minidom
 from xml.dom.minidom import Node
+import numpy as np
 import os
 original=""
 segunda=""
@@ -20,6 +21,7 @@ coll2=""
 ima=""
 ima2=""
 ima3=""
+listaextra=[]
 class matriz():
     def __init__(self, nombre, fila, columna,imagen):
         self.nombre = nombre
