@@ -431,11 +431,12 @@ def Operaciones():
                 global coll2
                 ima2= li2.matrizp(fll2,coll2)
                 valor2=valor2+'\n'
-                ttk.Label(raiz, text ="Segunda: "+ valor2 +str(ima2), 
+                ttk.Label(raiz, text ="Segunda:  "+ valor2 +str(ima2), 
                 font = ("Times New Roman", 10)).grid(column=1,
                 row=35)
         
-                
+        def verlo3():
+            print()        
         B = ttk.Button(raiz, text ="Seleccionar",command=verlo)
         B2 = ttk.Button(raiz, text ="Seleccionar", command=verlo2)
         B3 = ttk.Button(raiz, text ="Seleccionar")
