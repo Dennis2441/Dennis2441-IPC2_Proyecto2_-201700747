@@ -19,7 +19,7 @@ fll2=""
 coll2=""
 ima=""
 ima2=""
-
+ima3=""
 class matriz():
     def __init__(self, nombre, fila, columna,imagen):
         self.nombre = nombre
@@ -201,6 +201,7 @@ class matrizx:
                     return actual.valor
                 actual=actual.abajo
             ecolumna=ecolumna.siguiente
+    
     def matrizp(self,fila,columna):
         linea=''
         jump=''
@@ -220,7 +221,22 @@ class matrizx:
             final=final+salto
             linea=''
         return(final)
+    def vertical(self,fila,columna):
+        linea=''
+        jump=''
+        final=''
+        jk=int(fila)
+        jk=jk+1
+        kj=int(columna)
+        kj=kj+1
+        cab=self.ecolumnas.primero
         
+        return(final)
+                
+        
+
+
+
 
                     
 
@@ -435,12 +451,35 @@ def Operaciones():
                 font = ("Times New Roman", 10)).grid(column=1,
                 row=35)
         
+        
         def verlo3():
-            print()        
+            global lista_matriz
+            global original
+            global segunda
+            global valor
+            
+            
+            au=cb2.get()
+            if valor=="":
+                if valor=="":
+                    messagebox.showinfo("matriz","Escoger matriz orginal antes de operar")
+            elif(au==""):
+                messagebox.showinfo("matriz","Escoger Rotacion")
+            else:
+                global ima3
+                global fll
+                global coll
+                ima3=li.vertical(fll,coll)
+                au=au+'\n'
+                ttk.Label(raiz, text ="Rotacion: "+ au +str(ima3), 
+                font = ("Times New Roman", 10)).grid(column=0,
+                row=35)
+
+
         B = ttk.Button(raiz, text ="Seleccionar",command=verlo)
         B2 = ttk.Button(raiz, text ="Seleccionar", command=verlo2)
         B3 = ttk.Button(raiz, text ="Seleccionar")
-        B4 = ttk.Button(raiz, text ="Seleccionar")
+        B4 = ttk.Button(raiz, text ="Seleccionar",command=verlo3)
         B.grid(column = 2, row = 15)
         B2.grid(column = 2, row = 20)
         B4.grid(column = 2, row = 30)
@@ -471,11 +510,11 @@ def leerimagen1():
             coll=ii.columna
     char=''
     next_char=''
-    cc=0
+    cc=1
     ff=1
     estado=0
     for i in range(len(original)):
-        cc=cc+1  
+          
         char=original[i]
         try:
          next_char=original[i+1]
@@ -485,12 +524,24 @@ def leerimagen1():
         if(estado==0):
             if(char=='-'):
                 li.insertar(ff,cc,char,valor)
+                cc=cc+1
             elif(char=='*'):
                 li.insertar(ff,cc,char,valor)
+                cc=cc+1
             elif(char.isspace()):
-                estado=0
+                estado=1
+        elif(estado==1):
+            if(char=='-'):
+                li.insertar(ff,cc,char,valor)
+                cc=cc+1
+            elif(char=='*'):
+                li.insertar(ff,cc,char,valor)
+                cc=cc+1
+            elif(char.isspace()):
+                estado=1
                 if(char=='\n'):
                     ff=ff+1
+                    cc=1
                     estado=0
     
 def leerimagen2():
@@ -507,11 +558,11 @@ def leerimagen2():
             coll2=ii.columna
     char=''
     next_char=''
-    cc=0
+    cc=1
     ff=1
     estado=0
     for i in range(len(segunda)):
-        cc=cc+1  
+         
         char=segunda[i]
         try:
          next_char=segunda[i+1]
@@ -521,12 +572,25 @@ def leerimagen2():
         if(estado==0):
             if(char=='-'):
                 li2.insertar(ff,cc,char,valor2)
+                cc=cc+1
             elif(char=='*'):
                 li2.insertar(ff,cc,char,valor2)
+                cc=cc+1
             elif(char.isspace()):
-                estado=0
+                estado=1
+                
+        elif(estado==1):
+            if(char=='-'):
+                li2.insertar(ff,cc,char,valor2)
+                cc=cc+1
+            elif(char=='*'):
+                li2.insertar(ff,cc,char,valor2)
+                cc=cc+1
+            elif(char.isspace()):
+                estado=1
                 if(char=='\n'):
                     ff=ff+1
+                    cc=1
                     estado=0
 def operar():
     global lista_matriz
