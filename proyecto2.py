@@ -203,7 +203,44 @@ class matrizx:
                     return actual.valor
                 actual=actual.abajo
             ecolumna=ecolumna.siguiente
-    
+    def Limpiar(self,fila,columna,f11,c11,f22,c22):
+        linea=''
+        jump=''
+        final=''
+        jk=int(fila)
+        jk=jk+1
+        kj=int(columna)
+        kj=kj+1
+        f1=int(f11)
+        f2=int(f22)
+        c1=int(c11)
+        c2=int(c22)
+        c2=c2+1
+        for i in range(1,jk):
+            for j in range(1, kj):
+                val=self.buscar1(i,j)
+
+                if val==None:
+                    pass
+                elif(i==f1 and j==c1):
+                    if(c1<=c2):
+                        val='-'
+                        linea=linea+val
+                        c1=c1+1
+                    else:
+                        linea=linea+val
+                        if(f1<f2):
+                            f1=f1+1
+                            c1=1
+                        else:
+                            f1=0
+                else:
+                    linea=linea+val
+            salto=linea+'\n'
+            final=final+salto
+            linea=''
+        return(final)
+
     def matrizp(self,fila,columna):
         linea=''
         jump=''
@@ -358,7 +395,7 @@ def main():
         raiz.geometry("520x480")
 
     raiz.mainloop()
-
+idk=False
 def Operaciones():
     global lista_matriz
     global original
@@ -367,6 +404,7 @@ def Operaciones():
     global tipo
     global valor
     global valor2
+    global idk
     listaux=[]
     raiz=Tk()
     raiz.title("Proyecto2")
@@ -381,12 +419,18 @@ def Operaciones():
     ayuda.add_separator()
     menubar.add_cascade(label='Ayuda', menu=ayuda)
     raiz.config(menu=menubar)
-    raiz.geometry("820x520")
+    3
+    raiz.geometry("1000x1000")
     if len(lista_matriz)==0:
         messagebox.showinfo("Hacer Carga Para Poder Mostrar Datos")
     else:
         combo= ttk.Combobox(raiz,width = 27)
         combo2= ttk.Combobox(raiz,width = 27)
+        limpiar = ttk.Entry(raiz)
+        rectangulo = ttk.Entry(raiz)
+        vertical = ttk.Entry(raiz)
+        horizontal = ttk.Entry(raiz)
+        triangulo = ttk.Entry(raiz)
         data = ("Unión", "Intersección", "Diferencia", "Diferenciasimétrica")
         data1=("horizontal","vertical","Transpuesta")
         cb = ttk.Combobox(raiz, values=data)
@@ -394,6 +438,31 @@ def Operaciones():
         ttk.Label(raiz, text = "Selecione Matrix Original :", 
         font = ("Times New Roman", 10)).grid(column = 0, 
         row = 15, padx = 10, pady = 25)
+        ttk.Label(raiz, text = "Limpiar :", 
+        font = ("Times New Roman", 10)).grid(column = 7, 
+        row = 15, padx = 10, pady = 25)
+        ttk.Label(raiz, text = "Selecione Matrix a operar :", 
+        font = ("Times New Roman", 10)).grid(column = 0, 
+        row = 20, padx = 10, pady = 25)
+        ttk.Label(raiz, text = "Linea Horizontal :", 
+        font = ("Times New Roman", 10)).grid(column = 7, 
+        row =20 , padx = 10, pady = 25)
+        ttk.Label(raiz, text = "Tipo de Operacion :", 
+        font = ("Times New Roman", 10)).grid(column = 0, 
+        row = 25, padx = 10, pady = 25)
+        ttk.Label(raiz, text = "Linea Vertical :", 
+        font = ("Times New Roman", 10)).grid(column = 7, 
+        row =25 , padx = 10, pady = 25)
+        ttk.Label(raiz, text = "Rotacion :", 
+        font = ("Times New Roman", 10)).grid(column = 0, 
+        row = 30, padx = 10, pady = 25)
+        ttk.Label(raiz, text = "Rectangulo :", 
+        font = ("Times New Roman", 10)).grid(column = 7, 
+        row =30 , padx = 10, pady = 25)
+        ttk.Label(raiz, text = "Triángulo rectángulo :", 
+        font = ("Times New Roman", 10)).grid(column = 7, 
+        row =35 , padx = 10, pady = 25)
+        
         for i in lista_matriz:
             nombre=i.nombre
             listaux.append(nombre)
@@ -424,11 +493,12 @@ def Operaciones():
                 global ima
                 global fll
                 global coll
+                ima=""
                 ima= li.matrizp(fll,coll)
                 valor=valor+'\n'
                 ttk.Label(raiz, text ="Original: "+ valor +str(ima), 
                 font = ("Times New Roman", 10)).grid(column=0,
-                row=35)
+                row=50)
         def verlo2():
             global lista_matriz
             global original
@@ -447,14 +517,15 @@ def Operaciones():
                 global ima2
                 global fll2
                 global coll2
+                ima2=""
                 ima2= li2.matrizp(fll2,coll2)
                 valor2=valor2+'\n'
                 ttk.Label(raiz, text ="Segunda:  "+ valor2 +str(ima2), 
                 font = ("Times New Roman", 10)).grid(column=1,
-                row=35)
+                row=50)
         
         
-        def verlo3():
+        def rotacion():
             global lista_matriz
             global original
             global segunda
@@ -474,36 +545,83 @@ def Operaciones():
                 ima3=li.vertical(fll,coll)
                 au=au+'\n'
                 ttk.Label(raiz, text ="Rotacion: "+ au +str(ima3), 
-                font = ("Times New Roman", 10)).grid(column=0,
-                row=35)
+                font = ("Times New Roman", 10)).grid(column=2,
+                row=50)
+        def extra():
+            global lista_matriz
+            global original
+            global segunda
+            global valor
+            global ima3
+            global fll
+            global coll
+            
+            lim=str(limpiar.get())
+            ho=str(horizontal.get())
+            ve=str(vertical.get())
+            re=str(rectangulo.get())
+            tri=str(triangulo.get())
 
+            if valor=="":
+                if valor=="":
+                    messagebox.showinfo("matriz","Escoger matriz orginal antes de operar")
+            elif(li!=""):
+                print()
+                oo=[]
+                f11=""
+                f22=""
+                c11=""
+                c22=""
+                oo=lim.split(",")
+                f11=oo[0]
+                c11=oo[1]
+                f22=oo[2]
+                c22=oo[3]    
+                print(f11,c11,f22,c22)
+                ima3=li.Limpiar(fll,coll,f11,c11,f22,c22)
+                valor=valor
+                ttk.Label(raiz, text ="Limpiar : "+ valor +str(ima3), 
+                font = ("Times New Roman", 10)).grid(column=3,
+                row=50)
+                #ima3=li.Limpiar()
+            elif(ho!=""):
+                print
+            elif(ve!=""):
+                print
+            elif(re!=""):
+                print
+            elif(tri!=""):
+                print
+            else:
+                messagebox.showinfo("matriz","Llenar Datos Porfavor")
+            
 
         B = ttk.Button(raiz, text ="Seleccionar",command=verlo)
         B2 = ttk.Button(raiz, text ="Seleccionar", command=verlo2)
         B3 = ttk.Button(raiz, text ="Seleccionar")
-        B4 = ttk.Button(raiz, text ="Seleccionar",command=verlo3)
+        B4 = ttk.Button(raiz, text ="Seleccionar",command=rotacion)
+        B5 = ttk.Button(raiz, text ="Seleccionar",command=extra)
         B.grid(column = 2, row = 15)
         B2.grid(column = 2, row = 20)
         B4.grid(column = 2, row = 30)
         B3.grid(column = 2, row = 25)
-        ttk.Label(raiz, text = "Selecione Matrix a operar :", 
-        font = ("Times New Roman", 10)).grid(column = 0, 
-        row = 20, padx = 10, pady = 25)
-        ttk.Label(raiz, text = "Tipo de Operacion :", 
-        font = ("Times New Roman", 10)).grid(column = 0, 
-        row = 25, padx = 10, pady = 25)
-        ttk.Label(raiz, text = "Rotacion :", 
-        font = ("Times New Roman", 10)).grid(column = 0, 
-        row = 30, padx = 10, pady = 25)
+        B5.grid(column = 7, row = 40)
+        triangulo.grid(column=8,row=35)
+        horizontal.grid(column=8,row=20)
+        vertical.grid(column=8,row=25)
+        rectangulo.grid(column=8,row=30)
+        limpiar.grid(column=8,row=15)
         
     raiz.mainloop()
 
 def leerimagen1():
     global lista_matriz
+    global listaextra
     global original
     global valor
     global fll
     global coll
+    original=""
     for ii in lista_matriz:
         nn=ii.nombre
         if (nn==valor):
@@ -526,22 +644,27 @@ def leerimagen1():
         if(estado==0):
             if(char=='-'):
                 li.insertar(ff,cc,char,valor)
+                listaextra.append(char)
                 cc=cc+1
             elif(char=='*'):
                 li.insertar(ff,cc,char,valor)
+                listaextra.append(char)
                 cc=cc+1
             elif(char.isspace()):
                 estado=1
         elif(estado==1):
             if(char=='-'):
                 li.insertar(ff,cc,char,valor)
+                listaextra.append(char)
                 cc=cc+1
             elif(char=='*'):
                 li.insertar(ff,cc,char,valor)
+                listaextra.append(char)
                 cc=cc+1
             elif(char.isspace()):
                 estado=1
                 if(char=='\n'):
+                    listaextra.append(char)
                     ff=ff+1
                     cc=1
                     estado=0
