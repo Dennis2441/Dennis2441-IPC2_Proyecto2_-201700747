@@ -203,6 +203,68 @@ class matrizx:
                     return actual.valor
                 actual=actual.abajo
             ecolumna=ecolumna.siguiente
+    def lineavertical(self,fila,columna,f11,c11,ele):
+        linea=''
+        jump=''
+        final=''
+        jk=int(fila)
+        jk=jk+1
+        kj=int(columna)
+        kj=kj+1
+        f1=int(f11)
+        c1=int(c11)
+        f2=int(ele)
+        f2=f2+1
+        for i in range(1,jk):
+            for j in range(1, kj):
+                val=self.buscar1(i,j)
+                if val==None:
+                    pass
+                elif(i==f1 and j==c1):
+                    if(f1<=f2):
+                        val='*'
+                        linea=linea+val
+                        f1=f1+1
+                    else:
+                        linea=linea+val
+                        f1=0
+                else:
+                    linea=linea+val
+            salto=linea+'\n'
+            final=final+salto
+            linea=''
+        return(final)
+    def lineahorizontal(self,fila,columna,f11,c11,ele):
+        linea=''
+        jump=''
+        final=''
+        jk=int(fila)
+        jk=jk+1
+        kj=int(columna)
+        kj=kj+1
+        f1=int(f11)
+        c1=int(c11)
+        c2=int(ele)
+        c2=c2+1
+        for i in range(1,jk):
+            for j in range(1, kj):
+                val=self.buscar1(i,j)
+                if val==None:
+                    pass
+                elif(i==f1 and j==c1):
+                    if(c1<=c2):
+                        val='*'
+                        linea=linea+val
+                        c1=c1+1
+                    else:
+                        linea=linea+val
+                        c1=0
+                else:
+                    linea=linea+val
+            salto=linea+'\n'
+            final=final+salto
+            linea=''
+        return(final)
     def Limpiar(self,fila,columna,f11,c11,f22,c22):
         linea=''
         jump=''
@@ -565,7 +627,7 @@ def Operaciones():
             if valor=="":
                 if valor=="":
                     messagebox.showinfo("matriz","Escoger matriz orginal antes de operar")
-            elif(li!=""):
+            elif(lim !=''):
                 print()
                 oo=[]
                 f11=""
@@ -584,13 +646,37 @@ def Operaciones():
                 font = ("Times New Roman", 10)).grid(column=3,
                 row=50)
                 #ima3=li.Limpiar()
-            elif(ho!=""):
+            elif(ho !=''):
                 print
-            elif(ve!=""):
+                hh=[]
+                f11=""
+                c11=""
+                ele=""
+                hh=ho.split(",")
+                f11=hh[0]
+                c11=hh[1]
+                ele=hh[2]
+                ima3=li.lineahorizontal(fll,coll,f11,c11,ele)
+                ttk.Label(raiz, text ="Linea Horizontal : "+ valor +str(ima3), 
+                font = ("Times New Roman", 10)).grid(column=3,
+                row=50)
+            elif(ve !=''):
                 print
-            elif(re!=""):
+                vv=[]
+                f11=""
+                c11=""
+                ele=""
+                vv=ve.split(",")
+                f11=vv[0]
+                c11=vv[1]
+                ele=vv[2]
+                ima3=li.lineavertical(fll,coll,f11,c11,ele)
+                ttk.Label(raiz, text ="Linea Horizontal : "+ valor +str(ima3), 
+                font = ("Times New Roman", 10)).grid(column=3,
+                row=50)
+            elif(re !=''):
                 print
-            elif(tri!=""):
+            elif(tri !=''):
                 print
             else:
                 messagebox.showinfo("matriz","Llenar Datos Porfavor")
