@@ -203,6 +203,7 @@ class matrizx:
                     return actual.valor
                 actual=actual.abajo
             ecolumna=ecolumna.siguiente
+            
     def lineavertical(self,fila,columna,f11,c11,ele):
         linea=''
         jump=''
@@ -302,7 +303,62 @@ class matrizx:
             final=final+salto
             linea=''
         return(final)
+    def rectangulo(self,fila,columna,f11,c11,f22,c22):
+        linea=''
+        jump=''
+        final=''
+        jk=int(fila)
+        jk=jk+1
+        kj=int(columna)
+        kj=kj+1
+        f1=int(f11)
+        f2=int(f22)
+        c1=int(c11)
+        aux=int(c11)
+        c2=int(c22)
+        c3=int(c22)
+        c2=c2+1
+        flag=False
+        for i in range(1,jk):
+            for j in range(1, kj):
+                val=self.buscar1(i,j)
 
+                if val==None:
+                    pass
+                elif(i==f1 and j==c1):
+
+                    if(flag==False):
+                        if(c1<=c2):
+                            val='*'
+                            linea=linea+val
+                            c1=c1+1
+                        else:
+                            linea=linea+val
+                            if(f1<f2):
+                                f1=f1+1
+                                c1=aux
+                                flag=True
+                            else:
+                                f1=0
+                    else:
+                        if(c1==c2):
+                            val='*'
+                            linea=linea+val
+                            c1=aux
+                            f1=f1+1
+                            if(f1==f2):
+                                flag=False
+                            
+                        elif(c1<=c2):
+                            val='*'
+                            linea=linea+val
+                            c1=c2
+                else:
+                    linea=linea+val
+            salto=linea+'\n'
+            final=final+salto
+            linea=''
+        return(final)
     def matrizp(self,fila,columna):
         linea=''
         jump=''
@@ -675,7 +731,22 @@ def Operaciones():
                 font = ("Times New Roman", 10)).grid(column=3,
                 row=50)
             elif(re !=''):
-                print
+                rr=[]
+                f11=""
+                f22=""
+                c11=""
+                c22=""
+                rr=re.split(",")
+                f11=rr[0]
+                c11=rr[1]
+                f22=rr[2]
+                c22=rr[3]    
+                print(f11,c11,f22,c22)
+                ima3=li.rectangulo(fll,coll,f11,c11,f22,c22)
+                valor=valor
+                ttk.Label(raiz, text ="Limpiar : "+ valor +str(ima3), 
+                font = ("Times New Roman", 10)).grid(column=3,
+                row=50)
             elif(tri !=''):
                 print
             else:
