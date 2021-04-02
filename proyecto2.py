@@ -4,9 +4,10 @@ from tkinter import ttk
 from tkinter import filedialog
 from tkinter import messagebox
 import xml.dom.minidom
+import numpy as np
 from xml.dom import minidom
 from xml.dom.minidom import Node
-import numpy as np
+
 import os
 original=""
 segunda=""
@@ -319,45 +320,58 @@ class matrizx:
         c3=int(c22)
         c2=c2+1
         flag=False
+        estado=0
         for i in range(1,jk):
             for j in range(1, kj):
                 val=self.buscar1(i,j)
-
+                print("linea:"+linea)
                 if val==None:
                     pass
                 elif(i==f1 and j==c1):
-
-                    if(flag==False):
-                        if(c1<=c2):
-                            val='*'
+                    if(estado==0):
+                        if(c1<c2):
+                            val="*"
                             linea=linea+val
                             c1=c1+1
-                        else:
-                            linea=linea+val
-                            if(f1<f2):
+                            if(c1==c2):
                                 f1=f1+1
-                                c1=aux
-                                flag=True
-                            else:
-                                f1=0
-                    else:
-                        if(c1==c2):
-                            val='*'
+                                if(f1==f2):
+                                    estado=2
+                                    c1=aux
+                                else:
+                                    c1=aux
+                                    estado=1
+                    elif(estado==1):
+                        if(c1==aux):
+                            val="*"
+                            linea=linea+val
+                            c1=c3
+                        elif(c1==c3):
+                            val="*"
                             linea=linea+val
                             c1=aux
                             f1=f1+1
                             if(f1==f2):
-                                flag=False
-                            
-                        elif(c1<=c2):
-                            val='*'
+                                c1=aux
+                                estado=2
+                        else:
                             linea=linea+val
-                            c1=c2
+                    elif(estado==2):
+                        if(c1<c2):
+                            val="*"
+                            linea=linea+val
+                            c1=c1+1
+                            if(c1==c2):
+                                c1=0
+                                estado=0
+
+                    
                 else:
                     linea=linea+val
             salto=linea+'\n'
             final=final+salto
             linea=''
+            print("final:\n"+final)
         return(final)
     def matrizp(self,fila,columna):
         linea=''
@@ -377,6 +391,38 @@ class matrizx:
             salto=linea+'\n'
             final=final+salto
             linea=''
+        return(final)
+    def triangul(self,fila,columna,f11,c11,ele):
+        linea=''
+        jump=''
+        final=''
+        jk=int(fila)
+        jk=jk+1
+        kj=int(columna)
+        kj=kj+1
+        f1=int(f11)
+        c1=int(c11)
+        aux=int(c11)
+        f2=int(ele)
+        c2=int(ele)
+        flag=False
+        flag2=False
+        n=1
+        estado=0
+        for i in range(1,jk):
+            for j in range(1, kj):
+                val=self.buscar1(i,j)
+                print("linea:"+linea)
+                if val==None:
+                    pass
+                elif(i==f1 and j==c1):
+                    print()
+                else:
+                    linea=linea+val
+            salto=linea+'\n'
+            final=final+salto
+            linea=''
+            print("final: \n"+final)
         return(final)
     def vertical(self,fila,columna):
         linea=''
@@ -615,7 +661,7 @@ def Operaciones():
                 ima= li.matrizp(fll,coll)
                 valor=valor+'\n'
                 ttk.Label(raiz, text ="Original: "+ valor +str(ima), 
-                font = ("Times New Roman", 10)).grid(column=0,
+                font = ("Times New Roman", 25)).grid(column=0,
                 row=50)
         def verlo2():
             global lista_matriz
@@ -639,7 +685,7 @@ def Operaciones():
                 ima2= li2.matrizp(fll2,coll2)
                 valor2=valor2+'\n'
                 ttk.Label(raiz, text ="Segunda:  "+ valor2 +str(ima2), 
-                font = ("Times New Roman", 10)).grid(column=1,
+                font = ("Times New Roman", 25)).grid(column=1,
                 row=50)
         
         
@@ -663,7 +709,7 @@ def Operaciones():
                 ima3=li.vertical(fll,coll)
                 au=au+'\n'
                 ttk.Label(raiz, text ="Rotacion: "+ au +str(ima3), 
-                font = ("Times New Roman", 10)).grid(column=2,
+                font = ("Times New Roman", 25)).grid(column=2,
                 row=50)
         def extra():
             global lista_matriz
@@ -699,7 +745,7 @@ def Operaciones():
                 ima3=li.Limpiar(fll,coll,f11,c11,f22,c22)
                 valor=valor
                 ttk.Label(raiz, text ="Limpiar : "+ valor +str(ima3), 
-                font = ("Times New Roman", 10)).grid(column=3,
+                font = ("Times New Roman", 25)).grid(column=3,
                 row=50)
                 #ima3=li.Limpiar()
             elif(ho !=''):
@@ -714,7 +760,7 @@ def Operaciones():
                 ele=hh[2]
                 ima3=li.lineahorizontal(fll,coll,f11,c11,ele)
                 ttk.Label(raiz, text ="Linea Horizontal : "+ valor +str(ima3), 
-                font = ("Times New Roman", 10)).grid(column=3,
+                font = ("Times New Roman", 25)).grid(column=3,
                 row=50)
             elif(ve !=''):
                 print
@@ -728,7 +774,7 @@ def Operaciones():
                 ele=vv[2]
                 ima3=li.lineavertical(fll,coll,f11,c11,ele)
                 ttk.Label(raiz, text ="Linea Horizontal : "+ valor +str(ima3), 
-                font = ("Times New Roman", 10)).grid(column=3,
+                font = ("Times New Roman", 25)).grid(column=3,
                 row=50)
             elif(re !=''):
                 rr=[]
@@ -744,11 +790,23 @@ def Operaciones():
                 print(f11,c11,f22,c22)
                 ima3=li.rectangulo(fll,coll,f11,c11,f22,c22)
                 valor=valor
-                ttk.Label(raiz, text ="Limpiar : "+ valor +str(ima3), 
-                font = ("Times New Roman", 10)).grid(column=3,
+                ttk.Label(raiz, text ="Rectangulo : "+ valor +str(ima3), 
+                font = ("Times New Roman", 25)).grid(column=3,
                 row=50)
             elif(tri !=''):
                 print
+                tt=[]
+                f11=""
+                c11=""
+                ele=""
+                tt=tri.split(",")
+                f11=tt[0]
+                c11=tt[1]
+                ele=tt[2]
+                ima3=li.triangul(fll,coll,f11,c11,ele)
+                ttk.Label(raiz, text ="Linea Horizontal : "+ valor +str(ima3), 
+                font = ("Times New Roman", 25)).grid(column=3,
+                row=50)
             else:
                 messagebox.showinfo("matriz","Llenar Datos Porfavor")
             
@@ -761,7 +819,7 @@ def Operaciones():
         B.grid(column = 2, row = 15)
         B2.grid(column = 2, row = 20)
         B4.grid(column = 2, row = 30)
-        B3.grid(column = 2, row = 25)
+        B3.grid(column = 2, row = 25) 
         B5.grid(column = 7, row = 40)
         triangulo.grid(column=8,row=35)
         horizontal.grid(column=8,row=20)
