@@ -278,6 +278,7 @@ class matrizx:
         f1=int(f11)
         f2=int(f22)
         c1=int(c11)
+        aux=int(c11)
         c2=int(c22)
         c2=c2+1
         for i in range(1,jk):
@@ -287,17 +288,18 @@ class matrizx:
                 if val==None:
                     pass
                 elif(i==f1 and j==c1):
-                    if(c1<=c2):
-                        val='-'
+                    if(c1<c2):
+                        val="-"
                         linea=linea+val
                         c1=c1+1
-                    else:
-                        linea=linea+val
-                        if(f1<f2):
+                        if(c1==c2):
+                            c1=aux
                             f1=f1+1
-                            c1=1
-                        else:
-                            f1=0
+                            if(f1>f2):
+                                f1=0
+                            
+
+
                 else:
                     linea=linea+val
             salto=linea+'\n'
