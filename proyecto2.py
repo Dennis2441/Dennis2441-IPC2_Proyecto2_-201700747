@@ -504,7 +504,7 @@ class matrizx:
             linea=''
             print("final: \n"+final)
         return(final)
-    def vertical(self,fila,columna):
+    def horiz(self,fila,columna):
         linea=''
         jump=''
         final=''
@@ -512,8 +512,43 @@ class matrizx:
         jk=jk+1
         kj=int(columna)
         kj=kj+1
+        f1=int(fila)
+        c1=int(columna)
+        flag=False
         cab=self.ecolumnas.primero
-        
+        for i in reversed(range(jk)):
+            for j in range(1, kj):
+                val=self.buscar1(i,j)
+                if val==None:
+                    pass
+                else:
+                    linea=linea+val
+            salto=linea+'\n'
+            final=final+salto
+            linea=''
+        return(final)
+    def verti(self,fila,columna):
+        linea=''
+        jump=''
+        final=''
+        jk=int(fila)
+        jk=jk+1
+        kj=int(columna)
+        kj=kj+1
+        f1=int(fila)
+        c1=int(columna)
+        flag=False
+        cab=self.ecolumnas.primero
+        for i in  range(1, jk):
+            for j in reversed(range(kj)):
+                val=self.buscar1(i,j)
+                if val==None:
+                    pass
+                else:
+                    linea=linea+val
+            salto=linea+'\n'
+            final=final+salto
+            linea=''
         return(final)
     def dell(self):
         self.ecolumnas.primero=None
@@ -768,7 +803,9 @@ def Operaciones():
             global original
             global segunda
             global valor
-            
+            global ima3
+            global fll
+            global coll
             
             au=cb2.get()
             if valor=="":
@@ -776,14 +813,25 @@ def Operaciones():
                     messagebox.showinfo("matriz","Escoger matriz orginal antes de operar")
             elif(au==""):
                 messagebox.showinfo("matriz","Escoger Rotacion")
-            else:
-                global ima3
-                global fll
-                global coll
-                ima3=li.vertical(fll,coll)
-                au=au+'\n'
-                ttk.Label(raiz, text ="Rotacion: "+ au +str(ima3), 
-                font = ("Times New Roman", 25)).grid(column=2,
+            elif(au=="horizontal"):
+                
+                ima3= li.horiz(fll,coll)
+                valor=valor+'\n'
+                ttk.Label(raiz, text ="Horizontal de: "+ valor +str(ima3), 
+                font = ("Times New Roman", 25)).grid(column=3,
+                row=50)
+            elif(au=="vertical"):
+                
+                ima3= li.verti(fll,coll)
+                valor=valor+'\n'
+                ttk.Label(raiz, text ="Vertical de: "+ valor +str(ima3), 
+                font = ("Times New Roman", 25)).grid(column=3,
+                row=50)
+            elif(au="Transpuesta"):
+                ima3= li.verti(fll,coll)
+                valor=valor+'\n'
+                ttk.Label(raiz, text ="Vertical de: "+ valor +str(ima3), 
+                font = ("Times New Roman", 25)).grid(column=3,
                 row=50)
         def operar():
             global original
