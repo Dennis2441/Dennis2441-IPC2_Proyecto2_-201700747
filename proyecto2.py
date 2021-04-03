@@ -785,6 +785,293 @@ def Operaciones():
                 ttk.Label(raiz, text ="Rotacion: "+ au +str(ima3), 
                 font = ("Times New Roman", 25)).grid(column=2,
                 row=50)
+        def operar():
+            global original
+            global segunda
+            global valor
+            global valor2
+            global ima3
+            global fll
+            global coll
+            global fll2
+            global coll2
+            f1=int(fll)
+            c1=int(coll)
+            f2=int(fll2)
+            c2=int(coll2)
+            aux1=int(coll)
+            aux2=int(coll2)
+            au=cb.get()
+            linea=''
+            jump=''
+            final=''
+            x=1
+            y=1
+            x2=1
+            y2=1
+            flag=False
+            estado=0
+            ver=True
+            kj=f1+f2
+            vv=False
+            vv2=False
+            if(valor==""):
+                if(valor2==""):
+                    messagebox.showinfo("matriz","Escoger las dos Matrices")
+                else:
+                    messagebox.showinfo("matriz","Escoger matriz orginal antes de operar")
+            elif(valor2==""):
+                messagebox.showinfo("matriz","Escoger las dos Matrices")
+            elif(au=="Unión"):
+                
+                if(c1>c2):
+                    cl=c1
+                else:
+                    cl=c2
+
+                while ver==True:
+                    print("Linea:" + linea)
+                    if(flag==False):
+                        print
+                    else:
+                        salto=linea+'\n'
+                        final=final+salto
+                        linea=''
+                        print("final: \n"+final)
+                        flag=False
+                        vv2=False
+                        vv=False
+                    if(estado==0):
+                        if(x<=c1 and y<=f1):
+                            v1=li.buscar1(y,x)
+                            if(x2<=c2 and y2<=f2):
+                                v2=li2.buscar1(y2,x2)
+                                if(x==c1):
+                                    y=y+1
+                                    x=1
+                                    vv=True
+                                    if(x2==c2):
+                                        y2=y2+1
+                                        x2=1
+                                        flag=True
+                                        vv2=True
+                                    else:
+                                        estado=1
+                                if(x2==c2):
+                                    y2=y2+1
+                                    x2=1
+                                    vv2=True
+                                    if(x==c1):
+                                        y=y+1
+                                        x=1
+                                        flag=True
+                                        vv=False
+                                    else:
+                                        estado=2
+                                #______________________
+                                if(vv==False):        
+                                    x=x+1
+                                if(vv2==False):
+                                    x2=x2+1  
+                                #_________________________
+                                if(v1=="-"):
+                                    linea=linea+v2
+                                elif(v2=="-"):
+                                    linea=linea+v1
+                                else:
+                                    linea=linea+v1
+                                    if(x==c1):
+                                        y=y+1
+                                        x=1
+                                        flag=True
+                            else:
+                                v1=li.buscar1(y,x)
+                                linea=linea+v1
+                                if(x==c1):
+                                    if(c2>c1):
+                                        fin=c2-c1
+                                        for i in range(0,fin):
+                                            v1="-"
+                                            linea=linea+v1
+                                    y=y+1
+                                    x=1
+                                    flag=True
+                                else:
+                                    x=x+1
+                        elif(x2<=c2 and y2<=f2):
+                            v2=li2.buscar1(y2,x2)
+                            linea=linea+v2
+                            if(x2==c2):
+                                if(c1>c2):
+                                    fin=c1-c2
+                                    for i in range(0,fin):
+                                        v1="-"
+                                        linea=linea+v1
+                                y2=y2+1
+                                x2=1
+                                flag=True
+                            else:
+                                x2=x2+1
+                            
+                        else:
+                            ver=False
+                    elif(estado==1):
+                        if(x2<=c2 and y2<=f2):
+                            v2=li2.buscar1(y2,x2)
+                            linea=linea+v2
+                            if(x2==c2):
+                                
+                                y2=y2+1
+                                x2=1
+                                flag=True
+                                estado=0
+                            else:
+                                x2=x2+1
+                        else:
+                            flag=True
+                            estado=0
+                    elif(estado==2):
+                        if(x<=c1 and y<=f1):
+                            v1=li.buscar1(y,x)
+                            linea=linea+v1
+                            if(x==c1):
+                                y=y+1
+                                x=1
+                                flag=True
+                                estado=0
+                            else:
+                                x=x+1
+                        else:
+                            flag=True
+                            estado=0
+                ima3=final            
+                ttk.Label(raiz, text ="Union de  : "+ valor+" y "+valor2+"\n" +str(ima3), 
+                font = ("Times New Roman", 25)).grid(column=3,
+                row=50)
+       
+            elif(au=="Intersección"):
+                while ver==True:
+                    print("Linea:" + linea)
+                    if(flag==False):
+                        print
+                    else:
+                        salto=linea+'\n'
+                        final=final+salto
+                        linea=''
+                        print("final: \n"+final)
+                        flag=False
+                        vv2=False
+                        vv=False
+                    if(estado==0):
+                        if(x<=c1 and y<=f1):
+                            v1=li.buscar1(y,x)
+                            if(x2<=c2 and y2<=f2):
+                                v2=li2.buscar1(y2,x2)
+                                if(x==c1):
+                                    y=y+1
+                                    x=1
+                                    vv=True
+                                    if(x2==c2):
+                                        y2=y2+1
+                                        x2=1
+                                        flag=True
+                                        vv2=True
+                                    else:
+                                        estado=1
+                                if(x2==c2):
+                                    y2=y2+1
+                                    x2=1
+                                    vv2=True
+                                    if(x==c1):
+                                        y=y+1
+                                        x=1
+                                        flag=True
+                                        vv=False
+                                    else:
+                                            estado=2
+                                #______________________
+                                if(vv==False):        
+                                    x=x+1
+                                if(vv2==False):
+                                    x2=x2+1  
+                                #_________________________
+                                if(v1==v2):
+                                    if(v1=="*"):
+                                        linea=linea+v1
+                                    else:
+                                        v1="-"
+                                        linea=linea+v1
+                                else:
+                                    v1="-"
+                                    linea=linea+v1
+                            else:
+                                v1="-"
+                                linea=linea+v1
+                                if(x==c1):
+                                    if(c2>c1):
+                                        fin=c2-c1
+                                        for i in range(0,fin):
+                                            v1="-"
+                                            linea=linea+v1
+                                    y=y+1
+                                    x=1
+                                    flag=True
+                                else:
+                                    x=x+1
+                        elif(x2<=c2 and y2<=f2):
+                            v2="-"
+                            linea=linea+v2
+                            if(x2==c2):
+                                if(c1>c2):
+                                    fin=c1-c2
+                                    for i in range(0,fin):
+                                        v1="-"
+                                        linea=linea+v1
+                                y2=y2+1
+                                x2=1
+                                flag=True
+                            else:
+                                x2=x2+1
+                        else:
+                            ver=False
+                    elif(estado==1):
+                        if(x2<=c2 and y2<=f2):
+                            v2="-"
+                            linea=linea+v2
+                            if(x2==c2):
+                                    
+                                y2=y2+1
+                                x2=1
+                                flag=True
+                                estado=0
+                            else:
+                                x2=x2+1
+                        else:
+                            flag=True
+                            estado=0
+                    elif(estado==2):
+                        if(x<=c1 and y<=f1):
+                            v1="-"
+                            linea=linea+v1
+                            if(x==c1):
+                                y=y+1
+                                x=1
+                                flag=True
+                                estado=0
+                            else:
+                                x=x+1
+                        else:
+                            flag=True
+                            estado=0
+                ima3=final            
+                ttk.Label(raiz, text ="Interseccion de  : "+ valor+" y "+valor2+"\n" +str(ima3), 
+                font = ("Times New Roman", 25)).grid(column=3,
+                row=50)
+                        
+            elif(au=="Diferencia"):
+                print
+            elif(au=="Diferenciasimétrica "):
+                print
         def extra():
             global lista_matriz
             global original
@@ -887,7 +1174,7 @@ def Operaciones():
 
         B = ttk.Button(raiz, text ="Seleccionar",command=verlo)
         B2 = ttk.Button(raiz, text ="Seleccionar", command=verlo2)
-        B3 = ttk.Button(raiz, text ="Seleccionar")
+        B3 = ttk.Button(raiz, text ="Seleccionar",command=operar)
         B4 = ttk.Button(raiz, text ="Seleccionar",command=rotacion)
         B5 = ttk.Button(raiz, text ="Seleccionar",command=extra)
         B.grid(column = 2, row = 15)
