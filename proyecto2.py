@@ -111,8 +111,14 @@ class nodoencabezado:
 class listaencabezado:
     def __init__(self,primero=None):
         self.primero=primero
-
+    def eliminarid(self):
+        cabeza=self.primero
+        while cabeza:
+            prev=cabeza.siguiente
+            cabeza.id=None
+            cabeza=prev
     def setencabezadp(self,nuevo):
+
         if (self.primero==None):
             self.primero=nuevo
         elif(nuevo.id<self.primero.id):
@@ -146,6 +152,7 @@ class matrizx:
 
     
     def insertar(self,fila,columna,valor,nombre):
+
         nuevo=Nodo1(fila,columna,valor,nombre)
         ecolumna=self.ecolumnas.getencabezado(columna)
         
@@ -216,7 +223,7 @@ class matrizx:
         f1=int(f11)
         c1=int(c11)
         f2=int(ele)
-        f2=f2+1
+        
         for i in range(1,jk):
             for j in range(1, kj):
                 val=self.buscar1(i,j)
@@ -247,7 +254,7 @@ class matrizx:
         f1=int(f11)
         c1=int(c11)
         c2=int(ele)
-        c2=c2+1
+        
         for i in range(1,jk):
             for j in range(1, kj):
                 val=self.buscar1(i,j)
@@ -404,11 +411,25 @@ class matrizx:
         kj=kj+1
         f1=int(f11)
         c1=int(c11)
+        c3=int(c11)
+        c4=int(ele)
         aux=int(c11)
         f2=int(ele)
+
         c2=int(ele)
         flag=False
         flag2=False
+        if(f1==1):
+            flag2=False
+        else:
+            f2=f2+1
+        if(c1==1):
+            flag=False
+        else:
+            c2=c2+1
+            flag=True
+        
+        
         n=1
         estado=0
         for i in range(1,jk):
@@ -418,7 +439,64 @@ class matrizx:
                 if val==None:
                     pass
                 elif(i==f1 and j==c1):
-                    print()
+                    if(estado==0):
+                        val="*"
+                        linea=linea+val
+                        f1=f1+1
+                        estado=1
+                        c1=aux
+                        c3=c3+1
+                        n=n+1
+                    elif(estado==1):
+                        if (c1<=c3):
+                            val="*"
+                            linea=linea+val
+                            if(c1==c3):
+                                c1=aux
+                                f1=f1+1
+                                if(f1==f2):
+                                    estado=3
+
+                                else:
+                                    estado=2
+                            else:
+                                c1=c1+1
+                    elif(estado==2):
+                        if(c1==aux):
+                            val="*"
+                            linea=linea+val
+                            c1=c1+n
+                            n=n+1
+                        else:
+                            val="*"
+                            linea=linea+val
+                            c1=aux
+                            f1=f1+1
+                            if(f1==f2):
+                                estado=3
+                    elif(estado==3):
+                        if(flag==False):
+                            if(c1<=c2):
+                                val="*"
+                                linea=linea+val
+                                c1=c1+1
+                                if(c1>c2):
+                                    c1=0
+                                    f1=0
+                        else:
+                            if(c1<=c2):
+                                val="*"
+                                linea=linea+val
+                                c1=c1+1
+                                if(c1>c2):
+                                    c1=0
+                                    f1=0
+
+                            
+
+
+
+
                 else:
                     linea=linea+val
             salto=linea+'\n'
@@ -437,19 +515,13 @@ class matrizx:
         cab=self.ecolumnas.primero
         
         return(final)
-                
+    def dell(self):
+        self.ecolumnas.primero=None
+    def eliminar(self):
         
-
-
-
-
-                    
-
-
-
-
-
-
+        self.ecolumnas.eliminarid()
+        self.efilas.eliminarid()
+        
 
 #________________________________________________________________________________________________________________
 lista=lista_circular()
@@ -839,6 +911,7 @@ def leerimagen1():
     global fll
     global coll
     original=""
+    
     for ii in lista_matriz:
         nn=ii.nombre
         if (nn==valor):
