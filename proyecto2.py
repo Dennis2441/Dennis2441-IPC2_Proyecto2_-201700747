@@ -1555,7 +1555,38 @@ def Operaciones():
                 icon_size.grid(column=2,row=50)
                 raiz.update()
             elif(au=="Diferenciasimétrica"):
-                 while ver==True:
+                fila=1
+                columna=1
+                cc=1
+                if(c1>c2):
+                    cl=c1
+                    coll3=c1
+                    if(f1>f2):
+                        fll3=f1
+                    elif(f1==f2):
+                        fll3=f1
+                    else:
+                    
+                        fll3=f2
+                elif(c1==c2):
+                    coll3=c1
+                    if(f1>f2):
+                        fll3=f1
+                    elif(f1==f2):
+                        fll3=f1
+                    else:
+                    
+                        fll3=f2
+                else:
+                    coll3=c2
+                    cl=c2
+                    if(f1>f2):
+                        fll3=f1
+                    elif(f1==f2):
+                        fll3=f1 
+                    else:
+                        fll3=f2
+                while ver==True:
                     print("Linea:" + linea)
                     if(flag==False):
                         print
@@ -1577,6 +1608,7 @@ def Operaciones():
                                     x=1
                                     vv=True
                                     if(x2==c2):
+                                        vv3=True
                                         y2=y2+1
                                         x2=1
                                         flag=True
@@ -1588,6 +1620,7 @@ def Operaciones():
                                     x2=1
                                     vv2=True
                                     if(x==c1):
+                                        vv3=True
                                         y=y+1
                                         x=1
                                         flag=True
@@ -1602,53 +1635,88 @@ def Operaciones():
                                 #_________________________
                                 if(v1==v2):
                                     v1="-"
+                                    
                                     linea=linea+v1
+                                    li3.insertar(fila,columna,v1,"nuevo")
+                                    columna=columna+1
+                                    if(vv3==True):
+                                        columna=1
+                                        vv3=False
+                                        fila=fila+1
                                 else:
                                     if(v1=="-"):
                                         linea=linea+v2
+                                        li3.insertar(fila,columna,v2,"nuevo")
+                                        columna=columna+1
+                                        if(vv3==True):
+                                            columna=1
+                                            vv3=False
+                                            fila=fila+1
                                     else:
                                         linea=linea+v1
+                                        li3.insertar(fila,columna,v1,"nuevo")
+                                        columna=columna+1
+                                        if(vv3==True):
+                                            columna=1
+                                            vv3=False
+                                            fila=fila+1
                             else:
                                 v1="-"
                                 linea=linea+v1
+                                
+                                li3.insertar(fila,columna,v1,"nuevo")
                                 if(x==c1):
                                     if(c2>c1):
                                         fin=c2-c1
                                         for i in range(0,fin):
                                             v1="-"
+                                            columna=columna+1
+                                            li3.insertar(fila,columna,v1,"nuevo")
                                             linea=linea+v1
+                                    columna=1
+                                    fila=fila+1
                                     y=y+1
                                     x=1
                                     flag=True
                                 else:
+                                    columna=columna+1
                                     x=x+1
                         elif(x2<=c2 and y2<=f2):
                             v2="-"
                             linea=linea+v2
+                            li3.insertar(fila,columna,v2,"nuevo")
                             if(x2==c2):
                                 if(c1>c2):
                                     fin=c1-c2
                                     for i in range(0,fin):
                                         v1="-"
+                                        columna=columna+1
+                                        li3.insertar(fila,columna,v1,"nuevo")
                                         linea=linea+v1
+                                columna=1
+                                fila=fila+1
                                 y2=y2+1
                                 x2=1
                                 flag=True
                             else:
+                                columna=columna+1
                                 x2=x2+1
                         else:
                             ver=False
                     elif(estado==1):
                         if(x2<=c2 and y2<=f2):
                             v2="-"
+                            li3.insertar(fila,columna,v2,"nuevo")
                             linea=linea+v2
                             if(x2==c2):
-                                    
+                                fila=fila+1
+                                columna=1   
                                 y2=y2+1
                                 x2=1
                                 flag=True
                                 estado=0
                             else:
+                                columna=columna+1
                                 x2=x2+1
                         else:
                             flag=True
@@ -1656,22 +1724,30 @@ def Operaciones():
                     elif(estado==2):
                         if(x<=c1 and y<=f1):
                             v1="-"
+                            li3.insertar(fila,columna,v1,"nuevo")
                             linea=linea+v1
                             if(x==c1):
+                                fila=fila+1
+                                columna=1
                                 y=y+1
                                 x=1
                                 flag=True
                                 estado=0
                             else:
+                                columna=columna+1
                                 x=x+1
                         else:
                             flag=True
                             estado=0
-                 ima3=final            
-                 ttk.Label(raiz, text ="Diferencia Simetrica de  : "+ valor+" y "+valor2+"\n" +str(ima3), 
-                 font = ("Times New Roman", 25)).grid(column=4,
-                 row=50)
-                        
+                ima3=final 
+                mo3()           
+                iconPath = r"C:\Users\denni\OneDrive\Desktop\ima3.jpg"
+                icon = ImageTk.PhotoImage(Image.open(iconPath))
+                icon_size = Label(raiz)
+                icon_size.image = icon  # <== this is were we anchor the img object
+                icon_size.configure(image=icon)
+                icon_size.grid(column=2,row=50)
+                raiz.update()
             
         def extra():
             global lista_matriz
