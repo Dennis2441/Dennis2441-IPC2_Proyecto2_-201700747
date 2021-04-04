@@ -1,10 +1,12 @@
-from tkinter import *
 import tkinter as tk
+from tkinter import *
+from PIL import Image, ImageTk
 from tkinter import ttk
 from tkinter import filedialog
 from tkinter import messagebox
 import xml.dom.minidom
 import numpy as np
+import os
 from xml.dom import minidom
 from xml.dom.minidom import Node
 
@@ -19,6 +21,8 @@ fll=""
 coll=""
 fll2=""
 coll2=""
+fll3=""
+coll3=""
 ima=""
 ima2=""
 ima3=""
@@ -213,6 +217,10 @@ class matrizx:
             ecolumna=ecolumna.siguiente
             
     def lineavertical(self,fila,columna,f11,c11,ele):
+        global fll3
+        global coll3
+        fll3=fila
+        coll3=columna
         linea=''
         jump=''
         final=''
@@ -223,7 +231,7 @@ class matrizx:
         f1=int(f11)
         c1=int(c11)
         f2=int(ele)
-        
+        f2=f2+1
         for i in range(1,jk):
             for j in range(1, kj):
                 val=self.buscar1(i,j)
@@ -232,12 +240,15 @@ class matrizx:
                 elif(i==f1 and j==c1):
                     if(f1<=f2):
                         val='*'
+                        li3.insertar(i,j,val,"nuevo")
                         linea=linea+val
                         f1=f1+1
                     else:
+                        li3.insertar(i,j,val,"nuevo")
                         linea=linea+val
                         f1=0
                 else:
+                    li3.insertar(i,j,val,"nuevo")
                     linea=linea+val
             salto=linea+'\n'
             final=final+salto
@@ -247,6 +258,10 @@ class matrizx:
         linea=''
         jump=''
         final=''
+        global fll3
+        global coll3
+        fll3=fila
+        coll3=columna
         jk=int(fila)
         jk=jk+1
         kj=int(columna)
@@ -254,7 +269,7 @@ class matrizx:
         f1=int(f11)
         c1=int(c11)
         c2=int(ele)
-        
+        c2=c2+1
         for i in range(1,jk):
             for j in range(1, kj):
                 val=self.buscar1(i,j)
@@ -263,12 +278,15 @@ class matrizx:
                 elif(i==f1 and j==c1):
                     if(c1<=c2):
                         val='*'
+                        li3.insertar(i,j,val,"nuevo")
                         linea=linea+val
                         c1=c1+1
                     else:
+                        li3.insertar(i,j,val,"nuevo")
                         linea=linea+val
                         c1=0
                 else:
+                    li3.insertar(i,j,val,"nuevo")
                     linea=linea+val
             salto=linea+'\n'
             final=final+salto
@@ -288,6 +306,10 @@ class matrizx:
         aux=int(c11)
         c2=int(c22)
         c2=c2+1
+        global fll3
+        global coll3
+        fll3=fila
+        coll3=columna
         for i in range(1,jk):
             for j in range(1, kj):
                 val=self.buscar1(i,j)
@@ -297,6 +319,7 @@ class matrizx:
                 elif(i==f1 and j==c1):
                     if(c1<c2):
                         val="-"
+                        li3.insertar(i,j,val,"nuevo")
                         linea=linea+val
                         c1=c1+1
                         if(c1==c2):
@@ -308,6 +331,7 @@ class matrizx:
 
 
                 else:
+                    li3.insertar(i,j,val,"nuevo")
                     linea=linea+val
             salto=linea+'\n'
             final=final+salto
@@ -330,6 +354,10 @@ class matrizx:
         c2=c2+1
         flag=False
         estado=0
+        global fll3
+        global coll3
+        fll3=fila
+        coll3=columna
         for i in range(1,jk):
             for j in range(1, kj):
                 val=self.buscar1(i,j)
@@ -340,6 +368,7 @@ class matrizx:
                     if(estado==0):
                         if(c1<c2):
                             val="*"
+                            li3.insertar(i,j,val,"nuevo")
                             linea=linea+val
                             c1=c1+1
                             if(c1==c2):
@@ -353,10 +382,12 @@ class matrizx:
                     elif(estado==1):
                         if(c1==aux):
                             val="*"
+                            li3.insertar(i,j,val,"nuevo")
                             linea=linea+val
                             c1=c3
                         elif(c1==c3):
                             val="*"
+                            li3.insertar(i,j,val,"nuevo")
                             linea=linea+val
                             c1=aux
                             f1=f1+1
@@ -368,6 +399,7 @@ class matrizx:
                     elif(estado==2):
                         if(c1<c2):
                             val="*"
+                            li3.insertar(i,j,val,"nuevo")
                             linea=linea+val
                             c1=c1+1
                             if(c1==c2):
@@ -376,6 +408,7 @@ class matrizx:
 
                     
                 else:
+                    li3.insertar(i,j,val,"nuevo")
                     linea=linea+val
             salto=linea+'\n'
             final=final+salto
@@ -402,6 +435,10 @@ class matrizx:
             linea=''
         return(final)
     def triangul(self,fila,columna,f11,c11,ele):
+        global fll3
+        global coll3
+        fll3=fila
+        coll3=columna
         linea=''
         jump=''
         final=''
@@ -441,6 +478,7 @@ class matrizx:
                 elif(i==f1 and j==c1):
                     if(estado==0):
                         val="*"
+                        li3.insertar(i,j,val,"nuevo")
                         linea=linea+val
                         f1=f1+1
                         estado=1
@@ -450,6 +488,7 @@ class matrizx:
                     elif(estado==1):
                         if (c1<=c3):
                             val="*"
+                            li3.insertar(i,j,val,"nuevo")
                             linea=linea+val
                             if(c1==c3):
                                 c1=aux
@@ -464,11 +503,13 @@ class matrizx:
                     elif(estado==2):
                         if(c1==aux):
                             val="*"
+                            li3.insertar(i,j,val,"nuevo")
                             linea=linea+val
                             c1=c1+n
                             n=n+1
                         else:
                             val="*"
+                            li3.insertar(i,j,val,"nuevo")
                             linea=linea+val
                             c1=aux
                             f1=f1+1
@@ -478,6 +519,7 @@ class matrizx:
                         if(flag==False):
                             if(c1<=c2):
                                 val="*"
+                                li3.insertar(i,j,val,"nuevo")
                                 linea=linea+val
                                 c1=c1+1
                                 if(c1>c2):
@@ -486,18 +528,14 @@ class matrizx:
                         else:
                             if(c1<=c2):
                                 val="*"
+                                li3.insertar(i,j,val,"nuevo")
                                 linea=linea+val
                                 c1=c1+1
                                 if(c1>c2):
                                     c1=0
                                     f1=0
-
-                            
-
-
-
-
                 else:
+                    li3.insertar(i,j,val,"nuevo")
                     linea=linea+val
             salto=linea+'\n'
             final=final+salto
@@ -505,6 +543,10 @@ class matrizx:
             print("final: \n"+final)
         return(final)
     def horiz(self,fila,columna):
+        global fll3
+        global coll3
+        fll3=fila
+        coll3=columna
         linea=''
         jump=''
         final=''
@@ -522,6 +564,7 @@ class matrizx:
                 if val==None:
                     pass
                 else:
+                    li3.insertar(i,j,val,"nuevo")
                     linea=linea+val
             salto=linea+'\n'
             final=final+salto
@@ -545,6 +588,35 @@ class matrizx:
                 if val==None:
                     pass
                 else:
+                    li3.insertar(i,j,val,"nuevo")
+                    linea=linea+val
+            salto=linea+'\n'
+            final=final+salto
+            linea=''
+        return(final)
+    def tra(self,fila,columna):
+        global fll3
+        global coll3
+        fll3=fila
+        coll3=columna
+        linea=''
+        jump=''
+        final=''
+        jk=int(fila)
+        jk=jk+1
+        kj=int(columna)
+        kj=kj+1
+        f1=int(fila)
+        c1=int(columna)
+        flag=False
+        cab=self.ecolumnas.primero
+        for i in  range(1, jk):
+            for j in range(1,kj):
+                val=self.buscar1(i,j)
+                if val==None:
+                    pass
+                else:
+                    li3.insertar(i,j,val,"nuevo")
                     linea=linea+val
             salto=linea+'\n'
             final=final+salto
@@ -679,7 +751,7 @@ def Operaciones():
     global valor2
     global idk
     listaux=[]
-    raiz=Tk()
+    raiz=tk.Toplevel()
     raiz.title("Proyecto2")
     menubar=Menu(raiz)
     ayuda=Menu(menubar,tearoff=0)
@@ -753,7 +825,9 @@ def Operaciones():
             global original
             global segunda
             global valor
-            
+            global ima
+            global fll
+            global coll
             
             valor=combo.get()
             valor2=combo2.get()
@@ -763,15 +837,19 @@ def Operaciones():
                     messagebox.showinfo("matriz","Escoger matriz orginal antes de operar")
             else:
                 leerimagen1()
-                global ima
-                global fll
-                global coll
-                ima=""
                 ima= li.matrizp(fll,coll)
-                valor=valor+'\n'
-                ttk.Label(raiz, text ="Original: "+ valor +str(ima), 
-                font = ("Times New Roman", 25)).grid(column=0,
-                row=50)
+                iconPath = r"C:\Users\denni\OneDrive\Desktop\ima.jpg"
+                icon = ImageTk.PhotoImage(Image.open(iconPath))
+                icon_size = Label(raiz)
+                icon_size.image = icon  # <== this is were we anchor the img object
+                icon_size.configure(image=icon)
+                icon_size.grid(column=0,row=50)
+                raiz.update()
+                
+
+                
+                
+
         def verlo2():
             global lista_matriz
             global original
@@ -820,6 +898,7 @@ def Operaciones():
                 ttk.Label(raiz, text ="Horizontal de: "+ valor +str(ima3), 
                 font = ("Times New Roman", 25)).grid(column=3,
                 row=50)
+                mo3()
             elif(au=="vertical"):
                 
                 ima3= li.verti(fll,coll)
@@ -827,12 +906,14 @@ def Operaciones():
                 ttk.Label(raiz, text ="Vertical de: "+ valor +str(ima3), 
                 font = ("Times New Roman", 25)).grid(column=3,
                 row=50)
-            elif(au="Transpuesta"):
-                ima3= li.verti(fll,coll)
+                mo3()
+            elif(au=="Transpuesta"):
+                ima3= traa(fll,coll)
                 valor=valor+'\n'
                 ttk.Label(raiz, text ="Vertical de: "+ valor +str(ima3), 
                 font = ("Times New Roman", 25)).grid(column=3,
                 row=50)
+                mo3()
         def operar():
             global original
             global segunda
@@ -843,6 +924,8 @@ def Operaciones():
             global coll
             global fll2
             global coll2
+            global fll3
+            global coll3
             f1=int(fll)
             c1=int(coll)
             f2=int(fll2)
@@ -863,6 +946,7 @@ def Operaciones():
             kj=f1+f2
             vv=False
             vv2=False
+            vv3=False
             if(valor==""):
                 if(valor2==""):
                     messagebox.showinfo("matriz","Escoger las dos Matrices")
@@ -871,11 +955,37 @@ def Operaciones():
             elif(valor2==""):
                 messagebox.showinfo("matriz","Escoger las dos Matrices")
             elif(au=="Unión"):
-                
+                fila=1
+                columna=1
+                cc=1
                 if(c1>c2):
                     cl=c1
+                    coll3=c1
+                    if(f1>f2):
+                        fll3=f1
+                    elif(f1==f2):
+                        fll3=f1
+                    else:
+                    
+                        fll3=f2
+                elif(c1==c2):
+                    coll3=c1
+                    if(f1>f2):
+                        fll3=f1
+                    elif(f1==f2):
+                        fll3=f1
+                    else:
+                    
+                        fll3=f2
                 else:
+                    coll3=c2
                     cl=c2
+                    if(f1>f2):
+                        fll3=f1
+                    elif(f1==f2):
+                        fll3=f1 
+                    else:
+                        fll3=f2
 
                 while ver==True:
                     print("Linea:" + linea)
@@ -897,19 +1007,28 @@ def Operaciones():
                                 if(x==c1):
                                     y=y+1
                                     x=1
+
                                     vv=True
                                     if(x2==c2):
+                                        vv3=True
+
+                                        
+                                    
                                         y2=y2+1
                                         x2=1
                                         flag=True
                                         vv2=True
                                     else:
+
                                         estado=1
                                 if(x2==c2):
                                     y2=y2+1
                                     x2=1
                                     vv2=True
                                     if(x==c1):
+                                        vv3=True
+                                        
+                                        
                                         y=y+1
                                         x=1
                                         flag=True
@@ -917,48 +1036,93 @@ def Operaciones():
                                     else:
                                         estado=2
                                 #______________________
-                                if(vv==False):        
-                                    x=x+1
-                                if(vv2==False):
-                                    x2=x2+1  
+                                if(vv==False):
+                                    if(vv2==False):
+                                        x=x+1
+                                        x2=x2+1
+                                          
+                                    else:      
+                                        x=x+1
+                                elif(vv2==False):
+                                    if(vv==False):
+                                        x=x+1
+                                        
+                                        x2=x2+1
+                                    else:
+                                        x2=x2+1  
                                 #_________________________
                                 if(v1=="-"):
+                                    
                                     linea=linea+v2
+                                    li3.insertar(fila,columna,v2,"nuevo")
+                                    columna=columna+1
+                                    if(vv3==True):
+                                        columna=1
+                                        vv3=False
+                                        fila=fila+1
                                 elif(v2=="-"):
+                                    li3.insertar(fila,columna,v1,"nuevo")
                                     linea=linea+v1
+                                    columna=columna+1
+                                    if(vv3==True):
+                                        columna=1
+                                        vv3=False
+                                        fila=fila+1
                                 else:
+                                    li3.insertar(fila,columna,v1,"nuevo")
                                     linea=linea+v1
+                                    columna=columna+1
+                                    if(vv3==True):
+                                        columna=1
+                                        vv3=False
+                                        fila=fila+1
                                     if(x==c1):
+                                        fila=fila+1
+                                        columna=1
                                         y=y+1
                                         x=1
                                         flag=True
                             else:
                                 v1=li.buscar1(y,x)
+                                li3.insertar(fila,columna,v1,"nuevo")
                                 linea=linea+v1
                                 if(x==c1):
                                     if(c2>c1):
                                         fin=c2-c1
                                         for i in range(0,fin):
                                             v1="-"
+                                            columna=columna+1 
+                                            li3.insertar(fila,columna,v1,"nuevo")
                                             linea=linea+v1
+                                            
                                     y=y+1
+                                    fila=fila+1
+                                    columna=1 
                                     x=1
                                     flag=True
                                 else:
+                                    columna=columna+1 
                                     x=x+1
                         elif(x2<=c2 and y2<=f2):
                             v2=li2.buscar1(y2,x2)
+                            li3.insertar(fila,columna,v2,"nuevo")
                             linea=linea+v2
                             if(x2==c2):
                                 if(c1>c2):
                                     fin=c1-c2
                                     for i in range(0,fin):
                                         v1="-"
+                                        columna=columna+1 
+                                        li3.insertar(fila,columna,v1,"nuevo")
                                         linea=linea+v1
+                                        
                                 y2=y2+1
                                 x2=1
+                                fila=fila+1
+                                columna=1
                                 flag=True
                             else:
+                                columna=columna+1 
                                 x2=x2+1
                             
                         else:
@@ -966,14 +1130,18 @@ def Operaciones():
                     elif(estado==1):
                         if(x2<=c2 and y2<=f2):
                             v2=li2.buscar1(y2,x2)
+                            li3.insertar(fila,columna,v2,"nuevo")
                             linea=linea+v2
                             if(x2==c2):
                                 
                                 y2=y2+1
+                                fila=fila+1
+                                columna=1
                                 x2=1
                                 flag=True
                                 estado=0
                             else:
+                                columna=columna+1
                                 x2=x2+1
                         else:
                             flag=True
@@ -981,23 +1149,63 @@ def Operaciones():
                     elif(estado==2):
                         if(x<=c1 and y<=f1):
                             v1=li.buscar1(y,x)
+                            li3.insertar(fila,columna,v1,"nuevo")
                             linea=linea+v1
                             if(x==c1):
+                                fila=fila+1 
+                                columna=1 
                                 y=y+1
                                 x=1
                                 flag=True
                                 estado=0
                             else:
+                                columna=columna+1 
                                 x=x+1
                         else:
                             flag=True
                             estado=0
                 ima3=final            
-                ttk.Label(raiz, text ="Union de  : "+ valor+" y "+valor2+"\n" +str(ima3), 
-                font = ("Times New Roman", 25)).grid(column=3,
-                row=50)
-       
+                
+                mo3()
+                iconPath = r"C:\Users\denni\OneDrive\Desktop\ima3.jpg"
+                icon = ImageTk.PhotoImage(Image.open(iconPath))
+                icon_size = Label(raiz)
+                icon_size.image = icon  # <== this is were we anchor the img object
+                icon_size.configure(image=icon)
+                icon_size.grid(column=2,row=50)
+                raiz.update()
             elif(au=="Intersección"):
+                fila=1
+                columna=1
+                cc=1
+                if(c1>c2):
+                    cl=c1
+                    coll3=c1
+                    if(f1>f2):
+                        fll3=f1
+                    elif(f1==f2):
+                        fll3=f1
+                    else:
+                    
+                        fll3=f2
+                elif(c1==c2):
+                    coll3=c1
+                    if(f1>f2):
+                        fll3=f1
+                    elif(f1==f2):
+                        fll3=f1
+                    else:
+                    
+                        fll3=f2
+                else:
+                    coll3=c2
+                    cl=c2
+                    if(f1>f2):
+                        fll3=f1
+                    elif(f1==f2):
+                        fll3=f1 
+                    else:
+                        fll3=f2
                 while ver==True:
                     print("Linea:" + linea)
                     if(flag==False):
@@ -1020,6 +1228,7 @@ def Operaciones():
                                     x=1
                                     vv=True
                                     if(x2==c2):
+                                        vv3=True
                                         y2=y2+1
                                         x2=1
                                         flag=True
@@ -1031,6 +1240,7 @@ def Operaciones():
                                     x2=1
                                     vv2=True
                                     if(x==c1):
+                                        vv3=True
                                         y=y+1
                                         x=1
                                         flag=True
@@ -1045,22 +1255,45 @@ def Operaciones():
                                 #_________________________
                                 if(v1==v2):
                                     if(v1=="*"):
+                                        li3.insertar(fila,columna,v1,"nuevo")
                                         linea=linea+v1
+                                        columna=columna+1
+                                        if(vv3==True):
+                                            columna=1
+                                            vv3=False
+                                            fila=fila+1
                                     else:
                                         v1="-"
+                                        li3.insertar(fila,columna,v1,"nuevo")
                                         linea=linea+v1
+                                        columna=columna+1
+                                        if(vv3==True):
+                                            columna=1
+                                            vv3=False
+                                            fila=fila+1
                                 else:
                                     v1="-"
+                                    li3.insertar(fila,columna,v1,"nuevo")
                                     linea=linea+v1
+                                    columna=columna+1
+                                    if(vv3==True):
+                                            columna=1
+                                            vv3=False
+                                            fila=fila+1
                             else:
                                 v1="-"
+                                li3.insertar(fila,columna,v1,"nuevo")
                                 linea=linea+v1
                                 if(x==c1):
                                     if(c2>c1):
                                         fin=c2-c1
                                         for i in range(0,fin):
                                             v1="-"
+                                            columna=columna+1
+                                            li3.insertar(fila,columna,v1,"nuevo")
                                             linea=linea+v1
+                                    fila=fila+1
+                                    columna=1
                                     y=y+1
                                     x=1
                                     flag=True
@@ -1068,31 +1301,40 @@ def Operaciones():
                                     x=x+1
                         elif(x2<=c2 and y2<=f2):
                             v2="-"
+                            li3.insertar(fila,columna,v2,"nuevo")
                             linea=linea+v2
                             if(x2==c2):
                                 if(c1>c2):
                                     fin=c1-c2
                                     for i in range(0,fin):
                                         v1="-"
+                                        columna=columna+1
+                                        li3.insertar(fila,columna,v2,"nuevo")
                                         linea=linea+v1
+                                fila=fila+1
+                                columna=1
                                 y2=y2+1
                                 x2=1
                                 flag=True
                             else:
+                                columna=columna+1
                                 x2=x2+1
                         else:
                             ver=False
                     elif(estado==1):
                         if(x2<=c2 and y2<=f2):
                             v2="-"
+                            li3.insertar(fila,columna,v2,"nuevo")
                             linea=linea+v2
                             if(x2==c2):
-                                    
+                                fila=fila+1
+                                columna=1    
                                 y2=y2+1
                                 x2=1
                                 flag=True
                                 estado=0
                             else:
+                                columna=columna+1
                                 x2=x2+1
                         else:
                             flag=True
@@ -1100,24 +1342,65 @@ def Operaciones():
                     elif(estado==2):
                         if(x<=c1 and y<=f1):
                             v1="-"
+                            li3.insertar(fila,columna,v1,"nuevo")
                             linea=linea+v1
                             if(x==c1):
+                                fila=fila+1 
+                                columna=1
                                 y=y+1
                                 x=1
                                 flag=True
                                 estado=0
                             else:
+                                columna=columna+1
+                                
                                 x=x+1
                         else:
                             flag=True
                             estado=0
                 ima3=final            
-                ttk.Label(raiz, text ="Interseccion de  : "+ valor+" y "+valor2+"\n" +str(ima3), 
-                font = ("Times New Roman", 25)).grid(column=3,
-                row=50)
-                        
+                
+                mo3()   
+                iconPath = r"C:\Users\denni\OneDrive\Desktop\ima3.jpg"
+                icon = ImageTk.PhotoImage(Image.open(iconPath))
+                icon_size = Label(raiz)
+                icon_size.image = icon  # <== this is were we anchor the img object
+                icon_size.configure(image=icon)
+                icon_size.grid(column=2,row=50)
+                raiz.update()  
             elif(au=="Diferencia"):
                 print
+                fila=1
+                columna=1
+                cc=1
+                if(c1>c2):
+                    cl=c1
+                    coll3=c1
+                    if(f1>f2):
+                        fll3=f1
+                    elif(f1==f2):
+                        fll3=f1
+                    else:
+                    
+                        fll3=f2
+                elif(c1==c2):
+                    coll3=c1
+                    if(f1>f2):
+                        fll3=f1
+                    elif(f1==f2):
+                        fll3=f1
+                    else:
+                    
+                        fll3=f2
+                else:
+                    coll3=c2
+                    cl=c2
+                    if(f1>f2):
+                        fll3=f1
+                    elif(f1==f2):
+                        fll3=f1 
+                    else:
+                        fll3=f2
                 while ver==True:
                     print("Linea:" + linea)
                     if(flag==False):
@@ -1140,6 +1423,7 @@ def Operaciones():
                                     x=1
                                     vv=True
                                     if(x2==c2):
+                                        vv3=True
                                         y2=y2+1
                                         x2=1
                                         flag=True
@@ -1151,6 +1435,7 @@ def Operaciones():
                                     x2=1
                                     vv2=True
                                     if(x==c1):
+                                        vv3=True
                                         y=y+1
                                         x=1
                                         flag=True
@@ -1165,51 +1450,79 @@ def Operaciones():
                                 #_________________________
                                 if(v1==v2):
                                     v1="-"
-                                    linea=linea+v1           
+                                    linea=linea+v1  
+                                    li3.insertar(fila,columna,v1,"nuevo")
+                                    columna=columna+1
+                                    if(vv3==True):
+                                        columna=1
+                                        vv3=False
+                                        fila=fila+1         
                                 else:
                                     
                                     linea=linea+v1
+                                    li3.insertar(fila,columna,v1,"nuevo")
+                                    columna=columna+1
+                                    if(vv3==True):
+                                        columna=1
+                                        vv3=False
+                                        fila=fila+1
                             else:
                                 v1=li.buscar1(y,x)
+                                li3.insertar(fila,columna,v1,"nuevo")
                                 linea=linea+v1
                                 if(x==c1):
                                     if(c2>c1):
                                         fin=c2-c1
                                         for i in range(0,fin):
                                             v1="-"
+                                            columna=columna+1
+                                            li3.insertar(fila,columna,v1,"nuevo")
                                             linea=linea+v1
+                                    columna=1
+                                    fila=fila+1
                                     y=y+1
                                     x=1
                                     flag=True
                                 else:
+                                    columna=columna+1
                                     x=x+1
                         elif(x2<=c2 and y2<=f2):
                             v2="-"
+                            li3.insertar(fila,columna,v2,"nuevo")
                             linea=linea+v2
                             if(x2==c2):
                                 if(c1>c2):
                                     fin=c1-c2
                                     for i in range(0,fin):
                                         v1="-"
+                                        columna=columna+1
+                                        li3.insertar(fila,columna,v1,"nuevo")
                                         linea=linea+v1
+                                columna=columna+1
+                                fila=fila+1
                                 y2=y2+1
                                 x2=1
                                 flag=True
                             else:
+                                columna=columna+1
                                 x2=x2+1
                         else:
                             ver=False
                     elif(estado==1):
                         if(x2<=c2 and y2<=f2):
                             v2="-"
+                            li3.insertar(fila,columna,v2,"nuevo")
                             linea=linea+v2
                             if(x2==c2):
                                     
                                 y2=y2+1
                                 x2=1
+                                columna=1
+                                fila=fila+1
                                 flag=True
                                 estado=0
                             else:
+                                columna=columna+1
                                 x2=x2+1
                         else:
                             flag=True
@@ -1217,21 +1530,30 @@ def Operaciones():
                     elif(estado==2):
                         if(x<=c1 and y<=f1):
                             v1=li.buscar1(y,x)
+                            li3.insertar(fila,columna,v1,"nuevo")
                             linea=linea+v1
                             if(x==c1):
                                 y=y+1
                                 x=1
+                                columna=1
+                                fila=fila+1
                                 flag=True
                                 estado=0
                             else:
+                                columna=columna+1
                                 x=x+1
                         else:
                             flag=True
                             estado=0
-                ima3=final            
-                ttk.Label(raiz, text ="Diferencia de  : "+ valor+" y "+valor2+"\n" +str(ima3), 
-                font = ("Times New Roman", 25)).grid(column=3,
-                row=50)
+                ima3=final  
+                mo3()          
+                iconPath = r"C:\Users\denni\OneDrive\Desktop\ima3.jpg"
+                icon = ImageTk.PhotoImage(Image.open(iconPath))
+                icon_size = Label(raiz)
+                icon_size.image = icon  # <== this is were we anchor the img object
+                icon_size.configure(image=icon)
+                icon_size.grid(column=2,row=50)
+                raiz.update()
             elif(au=="Diferenciasimétrica"):
                  while ver==True:
                     print("Linea:" + linea)
@@ -1347,7 +1669,7 @@ def Operaciones():
                             estado=0
                  ima3=final            
                  ttk.Label(raiz, text ="Diferencia Simetrica de  : "+ valor+" y "+valor2+"\n" +str(ima3), 
-                 font = ("Times New Roman", 25)).grid(column=3,
+                 font = ("Times New Roman", 25)).grid(column=4,
                  row=50)
                         
             
@@ -1384,9 +1706,16 @@ def Operaciones():
                 print(f11,c11,f22,c22)
                 ima3=li.Limpiar(fll,coll,f11,c11,f22,c22)
                 valor=valor
-                ttk.Label(raiz, text ="Limpiar : "+ valor +str(ima3), 
-                font = ("Times New Roman", 25)).grid(column=3,
-                row=50)
+                
+                mo3()
+                iconPath = r"C:\Users\denni\OneDrive\Desktop\ima3.jpg"
+                icon = ImageTk.PhotoImage(Image.open(iconPath))
+                icon_size = Label(raiz)
+                icon_size.image = icon  # <== this is were we anchor the img object
+                icon_size.configure(image=icon)
+                icon_size.grid(column=2,row=50)
+                raiz.update()
+                
                 #ima3=li.Limpiar()
             elif(ho !=''):
                 print
@@ -1399,9 +1728,15 @@ def Operaciones():
                 c11=hh[1]
                 ele=hh[2]
                 ima3=li.lineahorizontal(fll,coll,f11,c11,ele)
-                ttk.Label(raiz, text ="Linea Horizontal : "+ valor +str(ima3), 
-                font = ("Times New Roman", 25)).grid(column=3,
-                row=50)
+                mo3()
+                iconPath = r"C:\Users\denni\OneDrive\Desktop\ima3.jpg"
+                icon = ImageTk.PhotoImage(Image.open(iconPath))
+                icon_size = Label(raiz)
+                icon_size.image = icon  # <== this is were we anchor the img object
+                icon_size.configure(image=icon)
+                icon_size.grid(column=2,row=50)
+                raiz.update()
+                
             elif(ve !=''):
                 print
                 vv=[]
@@ -1413,9 +1748,15 @@ def Operaciones():
                 c11=vv[1]
                 ele=vv[2]
                 ima3=li.lineavertical(fll,coll,f11,c11,ele)
-                ttk.Label(raiz, text ="Linea Horizontal : "+ valor +str(ima3), 
-                font = ("Times New Roman", 25)).grid(column=3,
-                row=50)
+                
+                mo3()
+                iconPath = r"C:\Users\denni\OneDrive\Desktop\ima3.jpg"
+                icon = ImageTk.PhotoImage(Image.open(iconPath))
+                icon_size = Label(raiz)
+                icon_size.image = icon  # <== this is were we anchor the img object
+                icon_size.configure(image=icon)
+                icon_size.grid(column=2,row=50)
+                raiz.update()
             elif(re !=''):
                 rr=[]
                 f11=""
@@ -1430,9 +1771,15 @@ def Operaciones():
                 print(f11,c11,f22,c22)
                 ima3=li.rectangulo(fll,coll,f11,c11,f22,c22)
                 valor=valor
-                ttk.Label(raiz, text ="Rectangulo : "+ valor +str(ima3), 
-                font = ("Times New Roman", 25)).grid(column=3,
-                row=50)
+                
+                mo3()
+                iconPath = r"C:\Users\denni\OneDrive\Desktop\ima3.jpg"
+                icon = ImageTk.PhotoImage(Image.open(iconPath))
+                icon_size = Label(raiz)
+                icon_size.image = icon  # <== this is were we anchor the img object
+                icon_size.configure(image=icon)
+                icon_size.grid(column=2,row=50)
+                raiz.update()
             elif(tri !=''):
                 print
                 tt=[]
@@ -1444,9 +1791,16 @@ def Operaciones():
                 c11=tt[1]
                 ele=tt[2]
                 ima3=li.triangul(fll,coll,f11,c11,ele)
-                ttk.Label(raiz, text ="Linea Horizontal : "+ valor +str(ima3), 
-                font = ("Times New Roman", 25)).grid(column=3,
-                row=50)
+                
+                mo3()
+                iconPath = r"C:\Users\denni\OneDrive\Desktop\ima3.jpg"
+                icon = ImageTk.PhotoImage(Image.open(iconPath))
+                icon_size = Label(raiz)
+                icon_size.image = icon  # <== this is were we anchor the img object
+                icon_size.configure(image=icon)
+                icon_size.grid(column=2,row=50)
+                raiz.update()
+
             else:
                 messagebox.showinfo("matriz","Llenar Datos Porfavor")
             
@@ -1468,6 +1822,253 @@ def Operaciones():
         limpiar.grid(column=8,row=15)
         
     raiz.mainloop()
+def traa(fila,columna):
+        global valor
+        linea=''
+        jump=''
+        final=''
+        ver=True
+        flag=True
+        estado=0
+        f1=int(fila)
+        c1=int(columna)
+        ff=int(columna)
+        cc=int(fila)
+        kf=ff+1
+        kc=cc+1
+        x=1
+        y=1
+        while ver==True:
+            if(estado==0):
+                if(x<=c1):
+                    if(y<=f1):
+                        val=li.buscar1(y,x)
+                        li3.insertar(x,y,val,valor)
+                        if(x==c1):
+                            y=y+1
+                            x=1
+                            if(y>f1):
+                                ver=False
+                                estado=1
+                        else:
+                            x=x+1
+                elif(y<=f1):
+                    print
+
+        
+        for i in  range(1, kf):
+            if(flag==False):
+                    print
+            else:
+                salto=linea+'\n'
+                final=final+salto
+                linea=''
+                print("final: \n"+final)
+                flag=False      
+            for j in range(1,kc):
+                val=li3.buscar1(i,j)
+                if val==None:
+                    pass
+                else:
+                    linea=linea+val
+                    flag=True
+        return(final)
+def mo1():
+    global ima
+    global valor
+    global fll
+    global coll
+    kf=int(fll)
+    kc=int(coll)
+    kf=kf+1
+    kc=kc+1
+    f=1
+    c=1
+    fila=int(fll)
+    columna=int(coll)
+    x=1
+    y=1
+    flag=False
+    quotes='"'
+    MapaRuta = open(r"C:\Users\denni\OneDrive\Desktop\ima.txt",'w')
+    MapaRuta.write('digraph {' + "\n")
+    MapaRuta.write('node [shape=plaintext]' + "\n")
+    MapaRuta.write('some_node [' + "\n")
+    MapaRuta.write('label=<' + "\n")
+    MapaRuta.write('<table border="0" cellborder="1" cellspacing="0">' + "\n")
+    MapaRuta.write('<tr>' + "\n")
+    MapaRuta.write('<td>' + "\n")
+    MapaRuta.write(valor + "\n")
+    MapaRuta.write('</td>' + "\n")
+    for i in range(1,kc):
+        MapaRuta.write('<td>' + "\n")
+        MapaRuta.write(str(i) + "\n")
+        MapaRuta.write('</td>' + "\n")
+    MapaRuta.write('</tr>' + "\n")
+    for i in range(1,kf):
+        MapaRuta.write('<tr>' + "\n")
+        MapaRuta.write('<td>' + "\n")
+        MapaRuta.write(str(i) + "\n")
+        MapaRuta.write('</td>' + "\n")
+        for j in range(1,kc):
+            val=li.buscar1(i,j)
+            MapaRuta.write('<td>' + "\n")
+            MapaRuta.write(val + "\n")
+            MapaRuta.write('</td>' + "\n")
+            if(j==columna):
+                MapaRuta.write('</tr>' + "\n")
+
+    MapaRuta.write(' </table>>' + "\n")
+    MapaRuta.write('  ];' + "\n")
+    MapaRuta.write(' }' + "\n")
+    MapaRuta.close()
+    os.system("dot -Tsvg "r"C:\Users\denni\OneDrive\Desktop\ima.txt -o "r"C:\Users\denni\OneDrive\Desktop\ima.svg")
+    os.system("dot -Tjpg "r"C:\Users\denni\OneDrive\Desktop\ima.txt -o "r"C:\Users\denni\OneDrive\Desktop\ima.jpg")
+    os.system("dot -Tpng "r"C:\Users\denni\OneDrive\Desktop\ima.txt -o "r"C:\Users\denni\OneDrive\Desktop\ima.png")
+def mo3():
+    global ima
+    global valor
+    global fll3
+    global coll3
+    kf=int(fll3)
+    kc=int(coll3)
+    kf=kf+1
+    kc=kc+1
+    f=1
+    c=1
+    fila=int(fll3)
+    columna=int(coll3)
+    x=1
+    y=1
+    flag=False
+    quotes='"'
+    MapaRuta = open(r"C:\Users\denni\OneDrive\Desktop\ima3.txt",'w')
+    MapaRuta.write('digraph {' + "\n")
+    MapaRuta.write('node [shape=plaintext]' + "\n")
+    MapaRuta.write('some_node [' + "\n")
+    MapaRuta.write('label=<' + "\n")
+    MapaRuta.write('<table border="0" cellborder="1" cellspacing="0">' + "\n")
+    MapaRuta.write('<tr>' + "\n")
+    MapaRuta.write('<td>' + "\n")
+    MapaRuta.write(valor + "\n")
+    MapaRuta.write('</td>' + "\n")
+    for i in range(1,kc):
+        MapaRuta.write('<td>' + "\n")
+        MapaRuta.write(str(i) + "\n")
+        MapaRuta.write('</td>' + "\n")
+    MapaRuta.write('</tr>' + "\n")
+    for i in range(1,kf):
+        MapaRuta.write('<tr>' + "\n")
+        MapaRuta.write('<td>' + "\n")
+        MapaRuta.write(str(i) + "\n")
+        MapaRuta.write('</td>' + "\n")
+        for j in range(1,kc):
+            print(i,j)
+            val=li3.buscar1(i,j)
+            print(val)
+            MapaRuta.write('<td>' + "\n")
+            MapaRuta.write(val + "\n")
+            MapaRuta.write('</td>' + "\n")
+            if(j==columna):
+                MapaRuta.write('</tr>' + "\n")
+
+    MapaRuta.write(' </table>>' + "\n")
+    MapaRuta.write('  ];' + "\n")
+    MapaRuta.write(' }' + "\n")
+    MapaRuta.close()
+    os.system("dot -Tsvg "r"C:\Users\denni\OneDrive\Desktop\ima3.txt -o "r"C:\Users\denni\OneDrive\Desktop\ima3.svg")
+    os.system("dot -Tjpg "r"C:\Users\denni\OneDrive\Desktop\ima3.txt -o "r"C:\Users\denni\OneDrive\Desktop\ima3.jpg")
+    os.system("dot -Tpng "r"C:\Users\denni\OneDrive\Desktop\ima3.txt -o "r"C:\Users\denni\OneDrive\Desktop\ima3.png")       
+def mostrar1():
+    global ima
+    global valor
+    global fll
+    global coll
+    kf=int(fll)
+    kc=int(coll)
+    kf=kf+1
+    kc=kc+1
+    f=1
+    c=1
+    fila=int(fll)
+    columna=int(coll)
+    x=1
+    y=1
+    flag=False
+    quotes='"'
+    MapaRuta = open(r"C:\Users\denni\OneDrive\Desktop\ima.txt",'w')
+    MapaRuta.write('digraph {' + "\n")
+    MapaRuta.write('node [shape=plaintext]' + "\n")
+    MapaRuta.write('some_node [' + "\n")
+    MapaRuta.write('label=<' + "\n")
+    MapaRuta.write('<table border="0" cellborder="1" cellspacing="0">' + "\n")
+    for i in range(1,kf):
+        MapaRuta.write('<tr>' + "\n")
+        for j in range(1,kc):
+            val=li.buscar1(i,j)
+            if(y==1):
+                if(x==1):
+                    MapaRuta.write('<td>' + "\n")
+                    nv=str(c)+"|"+valor+"<br/>"+val
+                    MapaRuta.write(quotes+nv+quotes + "\n")
+                    MapaRuta.write('</td>' + "\n")
+                    x=x+1
+                    c=c+1
+                    print
+                elif(x<=columna):
+                    if(x==columna):
+                        y=y+1
+                        x=1
+                        
+                        MapaRuta.write('<td>' + "\n")
+                        nv=str(c)+"<br/>----<br/>"+"\n"+val
+                        MapaRuta.write(quotes+nv+quotes + "\n")
+                        MapaRuta.write('</td>' + "\n")
+                        c=2
+                    else:
+                        MapaRuta.write('<td>' + "\n")
+                        nv=str(c)+"<br/>----<br/>"+"\n"+val
+                        MapaRuta.write(quotes+nv+quotes + "\n")
+                        MapaRuta.write('</td>' + "\n")
+                        x=x+1
+                        c=c+1
+            elif(y<=fila):
+                if(x==1):
+                    MapaRuta.write('<td>' + "\n")
+                    nv=str(f)+"| "+val
+                    MapaRuta.write(quotes+nv+quotes + "\n")
+                    MapaRuta.write('</td>' + "\n")
+                    x=x+1
+                    
+                elif(x<=columna):
+                    if(x==columna):
+                        x=1
+                        c=2
+                        f=f+1
+                        MapaRuta.write('<td>' + "\n")
+                        nv=val
+                        MapaRuta.write(quotes+nv+quotes + "\n")
+                        MapaRuta.write('</td>' + "\n")
+                    else:
+                        MapaRuta.write('<td>' + "\n")
+                        nv=val
+                        MapaRuta.write(quotes+nv+quotes + "\n")
+                        MapaRuta.write('</td>' + "\n")
+
+
+                
+
+
+
+
+
+        MapaRuta.write('</tr>' + "\n")
+    
+
+    MapaRuta.write(' </table>>' + "\n")
+    MapaRuta.write('  ];' + "\n")
+    MapaRuta.write(' }' + "\n")
+    MapaRuta.close()
 
 def leerimagen1():
     global lista_matriz
@@ -1524,7 +2125,7 @@ def leerimagen1():
                     ff=ff+1
                     cc=1
                     estado=0
-    
+    mo1()
 def leerimagen2():
     global lista_matriz
     global segunda
