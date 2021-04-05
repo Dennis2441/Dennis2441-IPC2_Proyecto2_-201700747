@@ -1593,7 +1593,7 @@ def Operaciones():
                                         columna=columna+1
                                         li3.insertar(fila,columna,v1,"nuevo")
                                         linea=linea+v1
-                                columna=columna+1
+                                columna=1
                                 fila=fila+1
                                 y2=y2+1
                                 x2=1
