@@ -142,11 +142,7 @@ class listaencabezado:
                 print(self.primero.id)
                 self.eliminarp()
                 return
-            
-            
-
-
-
+                
     def setencabezadp(self,nuevo):
         if (self.primero==None):
             self.primero=nuevo
