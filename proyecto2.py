@@ -775,8 +775,8 @@ def main():
         menubar.add_command(label='Reportes',command=html)
         
         #_________________________________
-        ayuda.add_command(label='Informacion Estudiante')
-        ayuda.add_command(label='Documentacion del programa')
+        ayuda.add_command(label='Informacion Estudiante',command=estudian)
+        ayuda.add_command(label='Documentacion del programa',command=abrirdocumentacion)
         ayuda.add_separator()
         menubar.add_cascade(label='Ayuda', menu=ayuda)
         raiz.config(menu=menubar)
@@ -2119,7 +2119,10 @@ def Operaciones():
         limpiar.grid(column=8,row=15)
         
     raiz.mainloop()
-
+def abrirdocumentacion():
+    os.startfile(r"C:\Users\denni\OneDrive\Desktop\Documentacion.pdf")
+def estudian():
+    messagebox.showinfo("Estudiante","Dennis Alexander Gamboa Stokes \n Carnet: 201700747")
 def html():
     global listareporte
     qu=""
