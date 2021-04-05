@@ -579,26 +579,33 @@ class matrizx:
         final=''
         jk=int(fila)
         jk=jk+1
+        fil=jk-1
         kj=int(columna)
         kj=kj+1
         f1=int(fila)
         c1=int(columna)
         flag=False
         cab=self.ecolumnas.primero
-        for i in reversed(range(jk)):
+        for i in range(1, jk):
             for j in range(1, kj):
-                val=self.buscar1(i,j)
+                val=self.buscar1(f1,j)
+                
                 if val==None:
                     pass
                 else:
                     li3.insertar(i,j,val,"nuevo")
                     linea=linea+val
+            f1=f1-1
             salto=linea+'\n'
             final=final+salto
             linea=''
         return(final)
     def verti(self,fila,columna):
         li3.eliminar()
+        global fll3
+        global coll3
+        fll3=fila
+        coll3=columna
         linea=''
         jump=''
         final=''
@@ -611,13 +618,15 @@ class matrizx:
         flag=False
         cab=self.ecolumnas.primero
         for i in  range(1, jk):
-            for j in reversed(range(kj)):
-                val=self.buscar1(i,j)
+            for j in  range(1,kj):
+                val=self.buscar1(i,c1)
+                c1=c1-1
                 if val==None:
                     pass
                 else:
                     li3.insertar(i,j,val,"nuevo")
                     linea=linea+val
+            c1=int(columna)
             salto=linea+'\n'
             final=final+salto
             linea=''
@@ -641,7 +650,7 @@ class matrizx:
         cab=self.ecolumnas.primero
         for i in  range(1, jk):
             for j in range(1,kj):
-                val=self.buscar1(i,j)
+                val=self.buscar1(j,i)
                 if val==None:
                     pass
                 else:
@@ -970,7 +979,7 @@ def Operaciones():
                 icon_size.grid(column=2,row=50)
                 raiz.update()
             elif(au=="Transpuesta"):
-                ima3= traa(fll,coll)
+                li.tra(fll,coll)
                 valor=valor+'\n'
                 reporte=reporte+" Rotacion:  Transpuesta"
                 listareporte.append(report("operacion",reporte))
