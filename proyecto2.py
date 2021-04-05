@@ -917,10 +917,13 @@ def Operaciones():
                 global coll2
                 ima2=""
                 ima2= li2.matrizp(fll2,coll2)
-                valor2=valor2+'\n'
-                ttk.Label(raiz, text ="Segunda:  "+ valor2 +str(ima2), 
-                font = ("Times New Roman", 25)).grid(column=1,
-                row=50)
+                iconPath = r"C:\Users\denni\OneDrive\Desktop\ima2.jpg"
+                icon = ImageTk.PhotoImage(Image.open(iconPath))
+                icon_size = Label(raiz)
+                icon_size.image = icon  # <== this is were we anchor the img object
+                icon_size.configure(image=icon)
+                icon_size.grid(column=1,row=50)
+                raiz.update()
         
         
         def rotacion():
@@ -2413,7 +2416,58 @@ def mostrar1():
     MapaRuta.write('  ];' + "\n")
     MapaRuta.write(' }' + "\n")
     MapaRuta.close()
+def mo2():
+    global ima2
+    global valor2
+    global fll2
+    global coll2
+    kf=int(fll2)
+    kc=int(coll2)
+    kf=kf+1
+    kc=kc+1
+    f=1
+    c=1
+    fila=int(fll2)
+    columna=int(coll2)
+    x=1
+    y=1
+    flag=False
+    quotes='"'
+    MapaRuta = open(r"C:\Users\denni\OneDrive\Desktop\ima2.txt",'w')
+    MapaRuta.write('digraph {' + "\n")
+    MapaRuta.write('node [shape=plaintext]' + "\n")
+    MapaRuta.write('some_node [' + "\n")
+    MapaRuta.write('label=<' + "\n")
+    MapaRuta.write('<table border="0" cellborder="1" cellspacing="0">' + "\n")
+    MapaRuta.write('<tr>' + "\n")
+    MapaRuta.write('<td>' + "\n")
+    MapaRuta.write(valor2 + "\n")
+    MapaRuta.write('</td>' + "\n")
+    for i in range(1,kc):
+        MapaRuta.write('<td>' + "\n")
+        MapaRuta.write(str(i) + "\n")
+        MapaRuta.write('</td>' + "\n")
+    MapaRuta.write('</tr>' + "\n")
+    for i in range(1,kf):
+        MapaRuta.write('<tr>' + "\n")
+        MapaRuta.write('<td>' + "\n")
+        MapaRuta.write(str(i) + "\n")
+        MapaRuta.write('</td>' + "\n")
+        for j in range(1,kc):
+            val=li2.buscar1(i,j)
+            MapaRuta.write('<td>' + "\n")
+            MapaRuta.write(val + "\n")
+            MapaRuta.write('</td>' + "\n")
+            if(j==columna):
+                MapaRuta.write('</tr>' + "\n")
 
+    MapaRuta.write(' </table>>' + "\n")
+    MapaRuta.write('  ];' + "\n")
+    MapaRuta.write(' }' + "\n")
+    MapaRuta.close()
+    os.system("dot -Tsvg "r"C:\Users\denni\OneDrive\Desktop\ima2.txt -o "r"C:\Users\denni\OneDrive\Desktop\ima2.svg")
+    os.system("dot -Tjpg "r"C:\Users\denni\OneDrive\Desktop\ima2.txt -o "r"C:\Users\denni\OneDrive\Desktop\ima2.jpg")
+    os.system("dot -Tpng "r"C:\Users\denni\OneDrive\Desktop\ima2.txt -o "r"C:\Users\denni\OneDrive\Desktop\ima2.png")
 def leerimagen1():
     li.eliminar()
     global lista_matriz
@@ -2425,7 +2479,7 @@ def leerimagen1():
     original=""
     today = now.strftime("%d/%m/%Y %H:%M:%S")
     reporte=""
-    reporte=today + " Nombre Matriz"+valor
+    reporte=today + " Nombre Matriz: "+valor
     lleno=0
     vacio=0
     for ii in lista_matriz:
@@ -2488,6 +2542,12 @@ def leerimagen2():
     global valor2
     global fll2
     global coll2
+    original=""
+    today = now.strftime("%d/%m/%Y %H:%M:%S")
+    reporte=""
+    lleno=0
+    vacio=0
+    reporte=today + " Nombre Matriz: "+valor2
     for ii in lista_matriz:
         nn=ii.nombre
         if nn==valor2:
@@ -2510,19 +2570,23 @@ def leerimagen2():
         if(estado==0):
             if(char=='-'):
                 li2.insertar(ff,cc,char,valor2)
+                vacio=vacio+1
                 cc=cc+1
             elif(char=='*'):
                 li2.insertar(ff,cc,char,valor2)
                 cc=cc+1
+                lleno=lleno+1
             elif(char.isspace()):
                 estado=1
                 
         elif(estado==1):
             if(char=='-'):
                 li2.insertar(ff,cc,char,valor2)
+                vacio=vacio+1
                 cc=cc+1
             elif(char=='*'):
                 li2.insertar(ff,cc,char,valor2)
+                lleno=lleno+1
                 cc=cc+1
             elif(char.isspace()):
                 estado=1
@@ -2530,6 +2594,9 @@ def leerimagen2():
                     ff=ff+1
                     cc=1
                     estado=0
+    reporte=reporte+", Espacios LLenos: "+str(lleno)+", Espacios Vacios: "+str(vacio)
+    listareporte.append(report("matriz",reporte))
+    mo2()
 def operar():
     global lista_matriz
     global original
