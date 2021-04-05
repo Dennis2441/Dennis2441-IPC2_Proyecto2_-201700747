@@ -9,8 +9,11 @@ import numpy as np
 import os
 from xml.dom import minidom
 from xml.dom.minidom import Node
-
 import os
+from datetime import datetime
+
+
+now = datetime.now()
 original=""
 segunda=""
 resultado=""
@@ -27,6 +30,12 @@ ima=""
 ima2=""
 ima3=""
 listaextra=[]
+listareporte=[]
+class report():
+    def __init__(self, id,descripcion):
+        self.id = id
+        self.descripcion = descripcion
+        
 class matriz():
     def __init__(self, nombre, fila, columna,imagen):
         self.nombre = nombre
@@ -115,14 +124,30 @@ class nodoencabezado:
 class listaencabezado:
     def __init__(self,primero=None):
         self.primero=primero
-    def eliminarid(self):
-        cabeza=self.primero
-        while cabeza:
-            prev=cabeza.siguiente
-            cabeza.id=None
-            cabeza=prev
-    def setencabezadp(self,nuevo):
+    def eliminarp(self):
+        if(self.primero==None):
+            print("vacio")
+        
+        if self.primero.siguiente==None:
+                self.primero=None
+                return
+        
+        self.primero=self.primero.siguiente
+        self.primero.anterior=None
+    def eliminar(self,id):
+        if(self.primero==None):
+            print("vacio")
+        else:
+            if(self.primero==id):
+                print(self.primero.id)
+                self.eliminarp()
+                return
+            
+            
 
+
+
+    def setencabezadp(self,nuevo):
         if (self.primero==None):
             self.primero=nuevo
         elif(nuevo.id<self.primero.id):
@@ -159,7 +184,7 @@ class matrizx:
 
         nuevo=Nodo1(fila,columna,valor,nombre)
         ecolumna=self.ecolumnas.getencabezado(columna)
-        
+        print(ecolumna)
         if ecolumna==None:
             ecolumna=nodoencabezado(columna)
             ecolumna.acceso=nuevo
@@ -293,6 +318,7 @@ class matrizx:
             linea=''
         return(final)
     def Limpiar(self,fila,columna,f11,c11,f22,c22):
+        li3.eliminar()
         linea=''
         jump=''
         final=''
@@ -625,9 +651,23 @@ class matrizx:
     def dell(self):
         self.ecolumnas.primero=None
     def eliminar(self):
+        columna=1
+        flag=True
         
-        self.ecolumnas.eliminarid()
-        self.efilas.eliminarid()
+        while flag==True:
+            ecolumna=self.ecolumnas.getencabezado(columna)
+            if(ecolumna==None):
+                flag=False
+            else:
+                self.ecolumnas.eliminar(ecolumna)
+                columna=columna+1
+
+                
+
+
+                
+            
+
         
 
 #________________________________________________________________________________________________________________
@@ -729,7 +769,7 @@ def main():
         ayuda=Menu(menubar,tearoff=0)
         menubar.add_command(label='Cargar Archivo', command=buscar)
         menubar.add_command(label='Operaciones',command=Operaciones)
-        menubar.add_command(label='Reportes')
+        menubar.add_command(label='Reportes',command=html)
         
         #_________________________________
         ayuda.add_command(label='Informacion Estudiante')
@@ -878,13 +918,17 @@ def Operaciones():
         
         def rotacion():
             global lista_matriz
+            
             global original
             global segunda
             global valor
             global ima3
             global fll
             global coll
-            
+            global listareporte
+            today = now.strftime("%d/%m/%Y %H:%M:%S")
+            reporte=""
+            reporte=today + " Nombre Matriz: "+valor
             au=cb2.get()
             if valor=="":
                 if valor=="":
@@ -895,7 +939,8 @@ def Operaciones():
                 
                 ima3= li.horiz(fll,coll)
                 valor=valor+'\n'
-                
+                reporte=reporte+" Rotacion:  Horizontal"
+                listareporte.append(report("operacion",reporte))
                 mo3()
                 iconPath = r"C:\Users\denni\OneDrive\Desktop\ima3.jpg"
                 icon = ImageTk.PhotoImage(Image.open(iconPath))
@@ -908,7 +953,8 @@ def Operaciones():
                 
                 ima3= li.verti(fll,coll)
                 valor=valor+'\n'
-                
+                reporte=reporte+" Rotacion:  Vertical"
+                listareporte.append(report("operacion",reporte))
                 mo3()
                 iconPath = r"C:\Users\denni\OneDrive\Desktop\ima3.jpg"
                 icon = ImageTk.PhotoImage(Image.open(iconPath))
@@ -920,6 +966,8 @@ def Operaciones():
             elif(au=="Transpuesta"):
                 ima3= traa(fll,coll)
                 valor=valor+'\n'
+                reporte=reporte+" Rotacion:  Transpuesta"
+                listareporte.append(report("operacion",reporte))
                 mo3()
                 iconPath = r"C:\Users\denni\OneDrive\Desktop\ima3.jpg"
                 icon = ImageTk.PhotoImage(Image.open(iconPath))
@@ -940,6 +988,9 @@ def Operaciones():
             global coll2
             global fll3
             global coll3
+            global listareporte
+            today = now.strftime("%d/%m/%Y %H:%M:%S")
+            reporte=""
             f1=int(fll)
             c1=int(coll)
             f2=int(fll2)
@@ -963,12 +1014,25 @@ def Operaciones():
             vv3=False
             if(valor==""):
                 if(valor2==""):
+                    reporte=today + "Matriz Original:   Matriz Secundaria: "
                     messagebox.showinfo("matriz","Escoger las dos Matrices")
+                    reporte=reporte+" Tipo Operacion: "+ au+" No se Escogio Matriz Original ni la Secundaria"
+                    listareporte.append(report("error",reporte))
+                    reporte=""
                 else:
+                    reporte=today + "Matriz Original:  Matriz Secundaria: "+valor2
                     messagebox.showinfo("matriz","Escoger matriz orginal antes de operar")
+                    reporte=reporte+" Tipo Operacion: "+ au+" No se Escogio Matriz Original"
+                    listareporte.append(report("error",reporte))
+                    reporte=""
             elif(valor2==""):
+                reporte=today + "Matriz Original: "+valor +" Matriz Secundaria: "
                 messagebox.showinfo("matriz","Escoger las dos Matrices")
+                reporte=reporte+" Tipo Operacion: "+ au+" No se Escogio Matriz Secundaria"
+                listareporte.append(report("error",reporte))
             elif(au=="Unión"):
+                reporte=today + "Matriz Original: "+valor +", Matriz Secundaria: "+valor2+", Tipo Operacion: "+au
+                listareporte.append(report("operacion",reporte))
                 fila=1
                 columna=1
                 cc=1
@@ -1189,6 +1253,8 @@ def Operaciones():
                 icon_size.grid(column=2,row=50)
                 raiz.update()
             elif(au=="Intersección"):
+                reporte=today + "Matriz Original: "+valor +", Matriz Secundaria: "+valor2+", Tipo Operacion: "+au
+                listareporte.append(report("operacion",reporte))
                 fila=1
                 columna=1
                 cc=1
@@ -1383,6 +1449,8 @@ def Operaciones():
                 icon_size.grid(column=2,row=50)
                 raiz.update()  
             elif(au=="Diferencia"):
+                reporte=today + "Matriz Original: "+valor +", Matriz Secundaria: "+valor2+", Tipo Operacion: "+au
+                listareporte.append(report("operacion",reporte))
                 print
                 fila=1
                 columna=1
@@ -1569,6 +1637,8 @@ def Operaciones():
                 icon_size.grid(column=2,row=50)
                 raiz.update()
             elif(au=="Diferenciasimétrica"):
+                reporte=today + "Matriz Original: "+valor +", Matriz Secundaria: "+valor2+", Tipo Operacion: Diferencia simétrica"
+                listareporte.append(report("operacion",reporte))
                 fila=1
                 columna=1
                 cc=1
@@ -1771,7 +1841,9 @@ def Operaciones():
             global ima3
             global fll
             global coll
-            
+            global listareporte
+            today = now.strftime("%d/%m/%Y %H:%M:%S")
+            reporte=""
             lim=str(limpiar.get())
             ho=str(horizontal.get())
             ve=str(vertical.get())
@@ -1782,114 +1854,239 @@ def Operaciones():
                 if valor=="":
                     messagebox.showinfo("matriz","Escoger matriz orginal antes de operar")
             elif(lim !=''):
+                reporte=today+" Nombre Matriz: "+valor+", Tipo operacion: Limpiar"
                 print()
                 oo=[]
                 f11=""
                 f22=""
                 c11=""
                 c22=""
+                f1=0
+                f2=0
+                c1=0
+                c2=0
                 oo=lim.split(",")
                 f11=oo[0]
                 c11=oo[1]
                 f22=oo[2]
                 c22=oo[3]    
                 print(f11,c11,f22,c22)
-                ima3=li.Limpiar(fll,coll,f11,c11,f22,c22)
-                valor=valor
-                
-                mo3()
-                iconPath = r"C:\Users\denni\OneDrive\Desktop\ima3.jpg"
-                icon = ImageTk.PhotoImage(Image.open(iconPath))
-                icon_size = Label(raiz)
-                icon_size.image = icon  # <== this is were we anchor the img object
-                icon_size.configure(image=icon)
-                icon_size.grid(column=2,row=50)
-                raiz.update()
+                f1=int(f11)
+                f2=int(f22)
+                c1=int(c11)
+                c2=int(c22)
+                if(f1==0 or f2==0 or c1==0 or c2==0):
+                    reporte=reporte+" Las dimensiones no pueden ser igual a 0"
+                    listareporte.append(report("error",reporte))
+                elif(f1>int(fll)):
+                    reporte=reporte+" La primera fila ingresada: "+f11+" ingresada es mayor que la dimension aceptada: "+fll
+                    listareporte.append(report("error",reporte))
+                elif(f2>int(fll)):
+                    reporte=reporte+" La primera fila ingresada: "+f22+" ingresada es mayor que la dimension aceptada: "+fll
+                    listareporte.append(report("error",reporte))
+                elif(f1>f2):
+                    reporte=reporte+" La segunda fila ingresada: "+f11+" ingresada es menor que la primera ingresada: "+f22
+                    listareporte.append(report("error",reporte))
+                elif(c1>int(coll)):
+                    reporte=reporte+" La primera columna ingresada: "+c11+" ingresada es mayor que la dimension aceptada: "+coll
+                    listareporte.append(report("error",reporte))
+                elif(c2>int(coll)):
+                    reporte=reporte+" La segunda columna ingresada: "+c22+" ingresada es mayor que la dimension aceptada: "+coll
+                    listareporte.append(report("error",reporte))
+                elif(c1>c2):
+                    reporte=reporte+" La segunda columna ingresada: "+c11+" ingresada es menor que la primera ingresada: "+c22
+                    listareporte.append(report("error",reporte))
+
+                else:
+                    ima3=li.Limpiar(fll,coll,f11,c11,f22,c22)
+                    valor=valor
+                    listareporte.append(report("operacion",reporte))
+                    mo3()
+                    iconPath = r"C:\Users\denni\OneDrive\Desktop\ima3.jpg"
+                    icon = ImageTk.PhotoImage(Image.open(iconPath))
+                    icon_size = Label(raiz)
+                    icon_size.image = icon  # <== this is were we anchor the img object
+                    icon_size.configure(image=icon)
+                    icon_size.grid(column=2,row=50)
+                    raiz.update()
                 
                 #ima3=li.Limpiar()
             elif(ho !=''):
+                reporte=today+" Nombre Matriz: "+valor+", Tipo operacion: Linea Horizontal"
                 print
                 hh=[]
                 f11=""
                 c11=""
                 ele=""
+                f1=0
+                c1=0
+                elel=0
                 hh=ho.split(",")
                 f11=hh[0]
                 c11=hh[1]
                 ele=hh[2]
-                ima3=li.lineahorizontal(fll,coll,f11,c11,ele)
-                mo3()
-                iconPath = r"C:\Users\denni\OneDrive\Desktop\ima3.jpg"
-                icon = ImageTk.PhotoImage(Image.open(iconPath))
-                icon_size = Label(raiz)
-                icon_size.image = icon  # <== this is were we anchor the img object
-                icon_size.configure(image=icon)
-                icon_size.grid(column=2,row=50)
-                raiz.update()
+                f1=int(f11)
+                c1=int(c11)
+                elel=int(ele)
+                if(f1>int(fll)):
+                    reporte=reporte+" La primera fila ingresada: "+f11+" ingresada es mayor que la dimension aceptada: "+fll
+                    listareporte.append(report("error",reporte))
+                elif(c1>int(coll)):
+                    reporte=reporte+" La primera columna ingresada: "+c11+" ingresada es mayor que la dimension aceptada: "+coll
+                    listareporte.append(report("error",reporte))
+                elif(elel>int(coll)):
+                    reporte=reporte+"EL numero de elementos: "+ele+" es mas grande que una de las dimensiones columna: "+coll
+                    listareporte.append(report("error",reporte))
+                
+                else:
+                    ima3=li.lineahorizontal(fll,coll,f11,c11,ele)
+                    listareporte.append(report("operacion",reporte))
+                    mo3()
+                    iconPath = r"C:\Users\denni\OneDrive\Desktop\ima3.jpg"
+                    icon = ImageTk.PhotoImage(Image.open(iconPath))
+                    icon_size = Label(raiz)
+                    icon_size.image = icon  # <== this is were we anchor the img object
+                    icon_size.configure(image=icon)
+                    icon_size.grid(column=2,row=50)
+                    raiz.update()
                 
             elif(ve !=''):
+                reporte=today+" Nombre Matriz: "+valor+", Tipo operacion: Linea Vertical"
                 print
                 vv=[]
                 f11=""
                 c11=""
                 ele=""
+                f1=0
+                c1=0
+                elel=0
                 vv=ve.split(",")
                 f11=vv[0]
                 c11=vv[1]
                 ele=vv[2]
-                ima3=li.lineavertical(fll,coll,f11,c11,ele)
-                
-                mo3()
-                iconPath = r"C:\Users\denni\OneDrive\Desktop\ima3.jpg"
-                icon = ImageTk.PhotoImage(Image.open(iconPath))
-                icon_size = Label(raiz)
-                icon_size.image = icon  # <== this is were we anchor the img object
-                icon_size.configure(image=icon)
-                icon_size.grid(column=2,row=50)
-                raiz.update()
+                f1=int(f11)
+                c1=int(c11)
+                elel=int(ele)
+                if(f1>int(fll)):
+                    reporte=reporte+" La primera fila ingresada: "+f11+" ingresada es mayor que la dimension aceptada: "+fll
+                    listareporte.append(report("error",reporte))
+                elif(c1==0 or f1==0 or elel==0):
+                    reporte=reporte+"Los elementos ingresados o dimensiones no pueden ser 0 "
+                    listareporte.append(report("error",reporte))
+                elif(c1>int(coll)):
+                    reporte=reporte+" La primera columna ingresada: "+c11+" ingresada es mayor que la dimension aceptada: "+coll
+                    listareporte.append(report("error",reporte))
+                elif(elel>int(fll)):
+                    reporte=reporte+"EL numero de elementos: "+ele+" es mas grande que una de las dimensiones  fila: "+fll
+                    listareporte.append(report("error",reporte))
+                else:
+                    ima3=li.lineavertical(fll,coll,f11,c11,ele)
+                    listareporte.append(report("operacion",reporte))
+                    mo3()
+                    iconPath = r"C:\Users\denni\OneDrive\Desktop\ima3.jpg"
+                    icon = ImageTk.PhotoImage(Image.open(iconPath))
+                    icon_size = Label(raiz)
+                    icon_size.image = icon  # <== this is were we anchor the img object
+                    icon_size.configure(image=icon)
+                    icon_size.grid(column=2,row=50)
+                    raiz.update()
             elif(re !=''):
+                reporte=today+" Nombre Matriz: "+valor+", Tipo operacion: Rectangulo"
                 rr=[]
                 f11=""
                 f22=""
                 c11=""
                 c22=""
+                f1=0
+                f2=0
+                c1=0
+                c2=0
                 rr=re.split(",")
                 f11=rr[0]
                 c11=rr[1]
                 f22=rr[2]
-                c22=rr[3]    
+                c22=rr[3]
+                f1=int(f11)
+                f2=int(f22)
+                c1=int(c11)
+                c2=int(c22)
                 print(f11,c11,f22,c22)
-                ima3=li.rectangulo(fll,coll,f11,c11,f22,c22)
-                valor=valor
-                
-                mo3()
-                iconPath = r"C:\Users\denni\OneDrive\Desktop\ima3.jpg"
-                icon = ImageTk.PhotoImage(Image.open(iconPath))
-                icon_size = Label(raiz)
-                icon_size.image = icon  # <== this is were we anchor the img object
-                icon_size.configure(image=icon)
-                icon_size.grid(column=2,row=50)
-                raiz.update()
+                if(f1==0 or f2==0 or c1==0 or c2==0):
+                    reporte=reporte+" Las dimensiones no pueden ser igual a 0"
+                    listareporte.append(report("error",reporte))
+                elif(f1>int(fll)):
+                    reporte=reporte+" La primera fila ingresada: "+f11+" ingresada es mayor que la dimension aceptada: "+fll
+                    listareporte.append(report("error",reporte))
+                elif(f2>int(fll)):
+                    reporte=reporte+" La primera fila ingresada: "+f22+" ingresada es mayor que la dimension aceptada: "+fll
+                    listareporte.append(report("error",reporte))
+                elif(f1>f2):
+                    reporte=reporte+" La segunda fila ingresada: "+f11+" ingresada es menor que la primera ingresada: "+f22
+                    listareporte.append(report("error",reporte))
+                elif(c1>int(coll)):
+                    reporte=reporte+" La primera columna ingresada: "+c11+" ingresada es mayor que la dimension aceptada: "+coll
+                    listareporte.append(report("error",reporte))
+                elif(c2>int(coll)):
+                    reporte=reporte+" La segunda columna ingresada: "+c22+" ingresada es mayor que la dimension aceptada: "+coll
+                    listareporte.append(report("error",reporte))
+                elif(c1>c2):
+                    reporte=reporte+" La segunda columna ingresada: "+c11+" ingresada es menor que la primera ingresada: "+c22
+                    listareporte.append(report("error",reporte))
+                else:
+                    ima3=li.rectangulo(fll,coll,f11,c11,f22,c22)
+                    listareporte.append(report("operacion",reporte))
+                    valor=valor
+                    
+                    mo3()
+                    iconPath = r"C:\Users\denni\OneDrive\Desktop\ima3.jpg"
+                    icon = ImageTk.PhotoImage(Image.open(iconPath))
+                    icon_size = Label(raiz)
+                    icon_size.image = icon  # <== this is were we anchor the img object
+                    icon_size.configure(image=icon)
+                    icon_size.grid(column=2,row=50)
+                    raiz.update()
             elif(tri !=''):
+                reporte=today+" Nombre Matriz: "+valor+", Tipo operacion: Triangulo"
                 print
                 tt=[]
                 f11=""
                 c11=""
                 ele=""
+                f1=0
+                
+                c1=0
+                elel=0
                 tt=tri.split(",")
                 f11=tt[0]
                 c11=tt[1]
                 ele=tt[2]
-                ima3=li.triangul(fll,coll,f11,c11,ele)
+                f1=int(f11)
                 
-                mo3()
-                iconPath = r"C:\Users\denni\OneDrive\Desktop\ima3.jpg"
-                icon = ImageTk.PhotoImage(Image.open(iconPath))
-                icon_size = Label(raiz)
-                icon_size.image = icon  # <== this is were we anchor the img object
-                icon_size.configure(image=icon)
-                icon_size.grid(column=2,row=50)
-                raiz.update()
+                c1=int(c11)
+                elel=int(ele)
+                if(f1>int(fll)):
+                    reporte=reporte+" La primera fila ingresada: "+f11+" ingresada es mayor que la dimension aceptada: "+fll
+                    listareporte.append(report("error",reporte))
+                elif(c1==0 or f1==0 or elel==0):
+                    reporte=reporte+"Los elementos ingresados o dimensiones no pueden ser 0 "
+                    listareporte.append(report("error",reporte))
+                elif(c1>int(coll)):
+                    reporte=reporte+" La primera columna ingresada: "+c11+" ingresada es mayor que la dimension aceptada: "+coll
+                    listareporte.append(report("error",reporte))
+                elif(elel>int(fll)):
+                    reporte=reporte+"EL numero de elementos: "+ele+" es mas grande que una de las dimensiones  fila: "+fll
+                    listareporte.append(report("error",reporte))
+                else:
+                    ima3=li.triangul(fll,coll,f11,c11,ele)
+                    listareporte.append(report("operacion",reporte))
+                    mo3()
+                    iconPath = r"C:\Users\denni\OneDrive\Desktop\ima3.jpg"
+                    icon = ImageTk.PhotoImage(Image.open(iconPath))
+                    icon_size = Label(raiz)
+                    icon_size.image = icon  # <== this is were we anchor the img object
+                    icon_size.configure(image=icon)
+                    icon_size.grid(column=2,row=50)
+                    raiz.update()
 
             else:
                 messagebox.showinfo("matriz","Llenar Datos Porfavor")
@@ -1912,6 +2109,45 @@ def Operaciones():
         limpiar.grid(column=8,row=15)
         
     raiz.mainloop()
+
+def html():
+    global listareporte
+    qu=""
+    sk=""
+    nombre=""
+    estado=0
+    error=[]
+    matriz=[]
+    operacion=[]
+    f = open(r"C:\Users\denni\OneDrive\Desktop\reporte.html",'w')
+    f.write("<html> <head> <style> </style></head> <body>"+'\n')
+    for i in listareporte:
+        ver=i.id
+        nombre=i.descripcion
+        if(ver=="operacion"):
+            operacion.append(nombre)
+        elif(ver=="matriz"):
+            matriz.append(nombre)
+        elif(ver=="error"):
+            error.append(nombre)
+    f.write("<h1 align="+qu+"center"+qu+">Matrices Trabajadas</h1>"+'\n')
+    for j in matriz:
+        nombre=j
+        f.write("<h2>"+nombre+"</h2>"+'\n')
+    f.write("<h1 align="+qu+"center"+qu+">Operaciones</h1>"+'\n')
+    for k in operacion:
+        nombre=k
+        f.write("<h2>"+nombre+"</h2>"+'\n')
+    f.write("<h1 align="+qu+"center"+qu+">Errores</h1>"+'\n')
+    for l in error:
+        nombre=l
+        f.write("<h2>"+nombre+"</h2>"+'\n')
+
+    f.write("</body> </html>")
+
+
+    f.close()      
+    os.startfile(r"C:\Users\denni\OneDrive\Desktop\reporte.html")
 def traa(fila,columna):
         global valor
         global fll3
@@ -2167,6 +2403,7 @@ def mostrar1():
     MapaRuta.close()
 
 def leerimagen1():
+    li.eliminar()
     global lista_matriz
     global listaextra
     global original
@@ -2174,7 +2411,11 @@ def leerimagen1():
     global fll
     global coll
     original=""
-    
+    today = now.strftime("%d/%m/%Y %H:%M:%S")
+    reporte=""
+    reporte=today + " Nombre Matriz"+valor
+    lleno=0
+    vacio=0
     for ii in lista_matriz:
         nn=ii.nombre
         if (nn==valor):
@@ -2199,20 +2440,24 @@ def leerimagen1():
                 li.insertar(ff,cc,char,valor)
                 listaextra.append(char)
                 cc=cc+1
+                vacio=vacio+1
             elif(char=='*'):
                 li.insertar(ff,cc,char,valor)
                 listaextra.append(char)
                 cc=cc+1
+                lleno=lleno+1
             elif(char.isspace()):
                 estado=1
         elif(estado==1):
             if(char=='-'):
                 li.insertar(ff,cc,char,valor)
                 listaextra.append(char)
+                vacio=vacio+1
                 cc=cc+1
             elif(char=='*'):
                 li.insertar(ff,cc,char,valor)
                 listaextra.append(char)
+                lleno=lleno+1
                 cc=cc+1
             elif(char.isspace()):
                 estado=1
@@ -2221,6 +2466,8 @@ def leerimagen1():
                     ff=ff+1
                     cc=1
                     estado=0
+    reporte=reporte+", Espacios LLenos: "+str(lleno)+", Espacios Vacios: "+str(vacio)
+    listareporte.append(report("matriz",reporte))
     mo1()
 def leerimagen2():
     global lista_matriz

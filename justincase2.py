@@ -142,12 +142,9 @@ class listaencabezado:
                 print(self.primero.id)
                 self.eliminarp()
                 return
-            
-            
-
-
 
     def setencabezadp(self,nuevo):
+
         if (self.primero==None):
             self.primero=nuevo
         elif(nuevo.id<self.primero.id):
@@ -184,7 +181,7 @@ class matrizx:
 
         nuevo=Nodo1(fila,columna,valor,nombre)
         ecolumna=self.ecolumnas.getencabezado(columna)
-        print(ecolumna)
+        
         if ecolumna==None:
             ecolumna=nodoencabezado(columna)
             ecolumna.acceso=nuevo
@@ -244,7 +241,6 @@ class matrizx:
     def lineavertical(self,fila,columna,f11,c11,ele):
         global fll3
         global coll3
-        li3.eliminar()
         fll3=fila
         coll3=columna
         linea=''
@@ -281,7 +277,6 @@ class matrizx:
             linea=''
         return(final)
     def lineahorizontal(self,fila,columna,f11,c11,ele):
-        li3.eliminar()
         linea=''
         jump=''
         final=''
@@ -366,7 +361,6 @@ class matrizx:
             linea=''
         return(final)
     def rectangulo(self,fila,columna,f11,c11,f22,c22):
-        li3.eliminar()
         linea=''
         jump=''
         final=''
@@ -464,7 +458,6 @@ class matrizx:
             linea=''
         return(final)
     def triangul(self,fila,columna,f11,c11,ele):
-        li3.eliminar()
         global fll3
         global coll3
         fll3=fila
@@ -573,7 +566,6 @@ class matrizx:
             print("final: \n"+final)
         return(final)
     def horiz(self,fila,columna):
-        li3.eliminar()
         global fll3
         global coll3
         fll3=fila
@@ -602,7 +594,6 @@ class matrizx:
             linea=''
         return(final)
     def verti(self,fila,columna):
-        li3.eliminar()
         linea=''
         jump=''
         final=''
@@ -627,7 +618,6 @@ class matrizx:
             linea=''
         return(final)
     def tra(self,fila,columna):
-        li3.eliminar()
         global fll3
         global coll3
         fll3=fila
@@ -658,6 +648,7 @@ class matrizx:
     def dell(self):
         self.ecolumnas.primero=None
     def eliminar(self):
+        
         columna=1
         flag=True
         
@@ -668,13 +659,6 @@ class matrizx:
             else:
                 self.ecolumnas.eliminar(ecolumna)
                 columna=columna+1
-
-                
-
-
-                
-            
-
         
 
 #________________________________________________________________________________________________________________
@@ -759,7 +743,7 @@ def main():
         menubar.add_command(label='Operaciones',command=Operaciones)
         menubar.add_command(label='Reportes')
         
-        #_________________________________
+        #_______no__________________________
         ayuda.add_command(label='Informacion Estudiante')
         ayuda.add_command(label='Documentacion del programa')
         ayuda.add_separator()
@@ -1043,7 +1027,6 @@ def Operaciones():
                 fila=1
                 columna=1
                 cc=1
-                li3.eliminar()
                 if(c1>c2):
                     cl=c1
                     coll3=c1
@@ -1266,7 +1249,6 @@ def Operaciones():
                 fila=1
                 columna=1
                 cc=1
-                li3.eliminar()
                 if(c1>c2):
                     cl=c1
                     coll3=c1
@@ -1464,7 +1446,6 @@ def Operaciones():
                 fila=1
                 columna=1
                 cc=1
-                li3.eliminar()
                 if(c1>c2):
                     cl=c1
                     coll3=c1
@@ -1652,7 +1633,6 @@ def Operaciones():
                 fila=1
                 columna=1
                 cc=1
-                li3.eliminar()
                 if(c1>c2):
                     cl=c1
                     coll3=c1
@@ -2160,7 +2140,6 @@ def html():
     f.close()      
     os.startfile(r"C:\Users\denni\OneDrive\Desktop\reporte.html")
 def traa(fila,columna):
-        li3.eliminar()
         global valor
         global fll3
         global coll3
@@ -2415,7 +2394,6 @@ def mostrar1():
     MapaRuta.close()
 
 def leerimagen1():
-    li.eliminar()
     global lista_matriz
     global listaextra
     global original
@@ -2482,7 +2460,6 @@ def leerimagen1():
     listareporte.append(report("matriz",reporte))
     mo1()
 def leerimagen2():
-    li2.eliminar()
     global lista_matriz
     global segunda
     global valor2
