@@ -635,8 +635,8 @@ class matrizx:
         li3.eliminar()
         global fll3
         global coll3
-        fll3=fila
-        coll3=columna
+        fll3=columna
+        coll3=fila
         linea=''
         jump=''
         final=''
@@ -648,8 +648,8 @@ class matrizx:
         c1=int(columna)
         flag=False
         cab=self.ecolumnas.primero
-        for i in  range(1, jk):
-            for j in range(1,kj):
+        for i in  range(1, kj):
+            for j in range(1,jk):
                 val=self.buscar1(j,i)
                 if val==None:
                     pass
@@ -717,6 +717,7 @@ def leerarchivo(cadena):
                 im = ma.getElementsByTagName("imagen")
                 print(nombre[0].firstChild.nodeValue,fila[0].firstChild.nodeValue,columna[0].firstChild.nodeValue)
                 lista_matriz.append(matriz(nombre[0].firstChild.nodeValue,fila[0].firstChild.nodeValue,columna[0].firstChild.nodeValue,im[0].firstChild.nodeValue))
+                ver=True
 
     if lista_matriz==None:
         print()
