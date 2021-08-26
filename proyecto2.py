@@ -1,4 +1,4 @@
-import tkinter as tkkkkkk
+import tkinter as tk
 from tkinter import *
 from PIL import Image, ImageTk
 from tkinter import ttk
